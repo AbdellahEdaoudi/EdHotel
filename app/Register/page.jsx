@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function page() {
   const [name, setName] = useState("");
@@ -35,7 +37,12 @@ function page() {
         setName("");
         setEmail("");
         setPass("");
-        setgoodCreat("User registered successfully.");
+        // setgoodCreat("");
+        toast("User registered successfully.", {
+          type: "success", // Can be 'success', 'error', 'info', etc.
+          position: "top-center", // Adjust position as needed
+          autoClose: 3000, // Milliseconds before auto-dismissal
+        });
         router.push("Login");
       } else {
         console.error(
@@ -43,11 +50,21 @@ function page() {
           response.status,
           response.statusText
         );
-        setEreur("Registration failed. Please try again.");
+        // setEreur("Registration failed. Please try again.");
+        toast("Registration failed. Please try again.", {
+          type: "error", // Can be 'success', 'error', 'info', etc.
+          position: "top-center", // Adjust position as needed
+          autoClose: 3000, // Milliseconds before auto-dismissal
+        });
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      setEreur("Email already exists. Please use a different email.");
+      // setEreur("Email already exists. Please use a different email.");
+      toast("Email already exists. Please use a different email.", {
+        type: "error", // Can be 'success', 'error', 'info', etc.
+        position: "top-center", // Adjust position as needed
+        autoClose: 3000, // Milliseconds before auto-dismissal
+      });
     }
   };
 
@@ -139,6 +156,7 @@ function page() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }

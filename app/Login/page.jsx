@@ -5,6 +5,8 @@ import axios from "axios";
 // import { useRouter } from "next/navigation";
 import {useSession} from  "next-auth/react"
 import SignInWithGoogle from "../Pages/SignInWithGoogle";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function page() {
@@ -20,7 +22,12 @@ function page() {
     e.preventDefault();
 
     if (!email || !pass) {
-      setEreur("Email and password are required.");
+      // setEreur("Email and password are required.");
+      toast("Email and password are required.", {
+        type: "error", // Can be 'success', 'error', 'info', etc.
+        position: "top-center", // Adjust position as needed
+        autoClose: 3000, // Milliseconds before auto-dismissal
+      });
       return;
     }
 
@@ -38,7 +45,11 @@ function page() {
         console.log("User Login successfully:", data);
         setEmail("");
         setPass("");
-        setgoodCreat("User Login successfully.");
+        toast("User Login successfully.", {
+          type: "success", // Can be 'success', 'error', 'info', etc.
+          position: "top-center", // Adjust position as needed
+          autoClose: 3000, // Milliseconds before auto-dismissal
+        });
         localStorage.setItem("accessToken", data.accessToken); // Set accessToken in localStorage
         localStorage.setItem("nameuser", data.name);
         window.location.assign("/HomePage");
@@ -48,11 +59,20 @@ function page() {
           response.status,
           response.statusText
         );
-        setEreur("Invalid credentials. Please try again."); // Update the error state correctly
+        // setEreur("");
+        toast("Invalid credentials. Please try again.", {
+          type: "error", // Can be 'success', 'error', 'info', etc.
+          position: "top-center", // Adjust position as needed
+          autoClose: 3000, // Milliseconds before auto-dismissal
+        }); // Update the error state correctly
       }
     } catch (error) {
       console.error("Error during login:", error);
-      setEreur("Invalid credentials. Please try again."); // Update the error state correctly
+      toast("Invalid credentials. Please try again.", {
+        type: "error", // Can be 'success', 'error', 'info', etc.
+        position: "top-center", // Adjust position as needed
+        autoClose: 3000, // Milliseconds before auto-dismissal
+      }); // Update the error state correctly
     }
   };
 
@@ -189,6 +209,7 @@ function page() {
           
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }
