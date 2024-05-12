@@ -23,7 +23,7 @@ export default Page;
 export function Contact() {
   const router = useRouter();
   const {data,status}=useSession()
-  const nameuser = localStorage.getItem("nameuser");
+  const nameuser = typeof window !== 'undefined' ? localStorage.getItem("nameuser") : null;
   const emaill = <img src="email.png" alt="star.png" width={22} height={11}/>
   const [name, setName] = useState(`${data?.user?.name} ${nameuser}`);
   const [email, setEmail] = useState(data?.user?.email);
@@ -78,9 +78,13 @@ export function Contact() {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/Contact")}
-  }, [router]);
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+    if (!accessToken && status === "unauthenticated") {
+      router.push("/Login");
+    } else {
+      router.push("/Contact");
+    }
+  }, [router, status]);
 
     return (
       <div>
@@ -90,14 +94,14 @@ export function Contact() {
           <h1 className="text-4xl mb-10 text-black font-bold">Contact <span className="text-amber-400 ">FOR ANY QUERY</span></h1>
         </div>
         <div className="text-amber-500 md:space-y-0  space-y-7 md:flex md:justify-between mx-5 md:mx-16  mb-5 ">
-          <p className="font-bold">BOKING   ----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} book@Hotel.app</span></p>
-          <p className="font-bold">TECHNICAL----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} tech@Hotel.app</span></p>
-          <p className="font-bold">GENERAL  ----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} info@Hotel.app</span></p>
+          <span className="font-bold">BOKING   ----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} book@Hotel.app</span></span>
+          <span className="font-bold">TECHNICAL----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} tech@Hotel.app</span></span>
+          <span className="font-bold">GENERAL  ----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} info@Hotel.app</span></span>
         </div>
         <form  method="post" className="mx-5 md:mx-16 md:flex  gap-4 py-10">
-        <div class="md:w-1/2 md:mb-0 mb-5 " data-wow-delay="0.1s">
+        <div className="md:w-1/2 md:mb-0 mb-5 " data-wow-delay="0.1s">
               <iframe
-                class="w-full h-full"
+                className="w-full h-full"
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13413.497715884776!2d-13.19815!3d27.154256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xc37731e21ffd02f%3A0xb5d8ba3b30a4a46b!2sH%C3%B4tel%20Al%20Massira!5e0!3m2!1sen!2sbd!4v1643685191346!5m2!1sen!2sbd
                 "
                 frameborder="0"
@@ -107,7 +111,7 @@ export function Contact() {
                 tabindex="0"
               ></iframe>
        </div>
-          <div class="md:w-1/2 w-full ">
+          <div className="md:w-1/2 w-full ">
             <nav className=" md:flex">
               <input value={`${data?.user?.name ? `${data?.user?.name}` : `${nameuser}` }`} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Your Name"  className=" mr-3 p-4 mb-5 bg-white text-black rounded-md border  w-full" />
               <input value={data?.user?.email} onChange={(e)=>{setEmail(e.target.value)}} type="text" placeholder="Your Email" className="p-4 mb-5 bg-white text-black rounded-md border w-full" />

@@ -9,8 +9,8 @@ function Header() {
   const [menu, setMenu] = useState(false);
   const [link, setLink] = useState("Home");
   const router = useRouter();
-  const accessToken = localStorage.getItem("accessToken");
-  const nameuser = localStorage.getItem("nameuser");
+  const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+  const nameuser = typeof window !== 'undefined' ? localStorage.getItem("nameuser") : null;
   const {data,status}=useSession()
   
 

@@ -54,7 +54,7 @@ export default function Page() {
     },[]);
 
     useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
+      const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
       {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/Booking")}
     }, [router]);
   console.log('====================================');

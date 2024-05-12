@@ -31,9 +31,13 @@ export  function Servise() {
     { Icon: <Dumbbell width={44} height={44} />, name: "Gym & Yoga", dec: "Achieve your fitness goals with our modern gym and yoga classes." },
   ];
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/Services")}
-  }, [router]);
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+    if (!accessToken && status === "unauthenticated") {
+      router.push("/Login");
+    } else {
+      router.push("/Services");
+    }
+  }, [router, status]);
   return (
     <div>
         {/* SERVICES */}

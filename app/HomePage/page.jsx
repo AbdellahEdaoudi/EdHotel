@@ -14,10 +14,13 @@ function Page() {
 
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/")}
-  }, [router]);
-
+    const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+    if (!accessToken && status === "unauthenticated") {
+      router.push("/Login");
+    } else {
+      router.push("/HomePage");
+    }
+  }, [router, status]);
     return (
       <>
     <div className="carousel w-full md:-mt-24 ">

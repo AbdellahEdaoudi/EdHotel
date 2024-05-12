@@ -25,9 +25,13 @@ function page({params}) {
     const [Booking,setBooking]=useState([]);
 
     useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
-      {!accessToken && status==="unauthenticated" ? router.push("/Login"):""}
-    }, [router]);
+      const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+      if (!accessToken && status === "unauthenticated") {
+        router.push("/Login");
+      } else {
+        router.push(`/Rooms/${params.RoomId}`);
+      }
+    }, [router, status]);
 
     useEffect(() => {
       axios.get('http://localhost:4444/Booking')

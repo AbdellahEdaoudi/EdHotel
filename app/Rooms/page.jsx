@@ -30,9 +30,13 @@ export default function Page() {
     
   
     useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
-      {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/Rooms")}
-    }, [router]);
+      const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+      if (!accessToken && status === "unauthenticated") {
+        router.push("/Login");
+      } else {
+        router.push("/Rooms");
+      }
+    }, [router, status]);
   
     useEffect(() => {
       axios.get('http://localhost:4444/Rooms')
