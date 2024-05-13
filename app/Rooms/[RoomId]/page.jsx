@@ -34,7 +34,7 @@ function page({params}) {
     }, [router, status]);
 
     useEffect(() => {
-      axios.get('http://localhost:4444/Booking')
+      axios.get(`${process.env.NEXTAUTH_URL}/api/Booking`)
         .then((res) => setBooking(res.data))
     },[]);
 
@@ -103,7 +103,7 @@ function page({params}) {
 
       try {
         const response = await axios.post(
-          "http://localhost:4444/Booking",
+          `${process.env.NEXTAUTH_URL}/api/Booking`,
           {nameC,email,nameR,prix:prixTotal,check_in,check_out},
           {
             headers: { "Content-Type": "application/json" },
@@ -143,7 +143,7 @@ function page({params}) {
   
 
   useEffect(() => {
-    axios.get(`http://localhost:4444/Rooms/${params.RoomId}`)
+    axios.get(`${process.env.NEXTAUTH_URL}/api/Rooms/${params.RoomId}`)
       .then((res)=>{setrm(res.data);
         setNameR(res.data.name);
         setPrix(res.data.prix);

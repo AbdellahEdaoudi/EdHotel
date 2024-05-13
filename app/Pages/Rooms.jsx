@@ -24,7 +24,7 @@ function Rooms() {
     }, [router, status]);
   
     useEffect(() => {
-      axios.get('http://localhost:4444/Rooms')
+      axios.get(`${process.env.NEXTAUTH_URL}/api/Rooms`)
         .then((res) => setdataH(res.data))
     },[]);
   

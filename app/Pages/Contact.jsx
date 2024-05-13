@@ -30,7 +30,7 @@ function Contact() {
       try {
         setIsLoading(true);
         const response = await axios.post(
-          "http://localhost:4444/Contact",
+          `${process.env.NEXTAUTH_URL}/api/Contact`,
           { name, email,subject, msg },
           {
             headers: { "Content-Type": "application/json" },
@@ -52,7 +52,6 @@ function Contact() {
         }, 2000);
       } catch (error) {
         console.error(error);
-        alert("");
         toast("An error occurred. Please try again.", {
           type: "error", // Can be 'success', 'error', 'info', etc.
           position: "top-center", // Adjust position as needed

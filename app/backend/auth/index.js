@@ -198,7 +198,7 @@ app.post("/logout", async (req, res) => {
 // hotelSchema
 
 //  get all Rooms
-app.get('/Rooms',async(req,res)=>{
+app.get('/api/Rooms',async(req,res)=>{
   try {
       const Rooms=await RoomsSch.find();
       res.json(Rooms)
@@ -209,7 +209,7 @@ app.get('/Rooms',async(req,res)=>{
 
 })
 //  ajouter nouveau Rooms
-app.post('/Rooms',async(req,res)=>{
+app.post('/api/Rooms',async(req,res)=>{
 
 try {
   const {imageUrl, name, type, capacity, prix} = req.body;
@@ -222,7 +222,7 @@ try {
 
 })
 // ajout doc ROomse
-app.post("/Roomss", async (req, res) => {
+app.post("/api/Roomss", async (req, res) => {
   try {
     const documents = req.body;
     const result = await RoomsSch.insertMany(documents);
@@ -232,7 +232,7 @@ app.post("/Roomss", async (req, res) => {
   }
 });
 //  get Rooms by Id
-app.get('/Rooms/:id',async(req,res)=>{
+app.get('/api/Rooms/:id',async(req,res)=>{
 try {
   const Rooms=await RoomsSch.findById({_id :req.params.id});
   res.json(Rooms)
@@ -244,7 +244,7 @@ try {
 })
 
 // update Rooms
-app.put('/Rooms/:id',async(req,res)=>{
+app.put('/api/Rooms/:id',async(req,res)=>{
 
 try {
   const { imageUrl, name, type, capacity, prix } = req.body;
@@ -259,7 +259,7 @@ try {
 })
 
 // delete Rooms
-app.delete('/Rooms/:id',async(req,res)=>{
+app.delete('/api/Rooms/:id',async(req,res)=>{
 try {
   const dRooms=await RoomsSch.findByIdAndDelete({_id:req.params.id});
   res.json(dRooms)
@@ -269,7 +269,7 @@ try {
 }
 })
 
-app.delete("/Roomsd", async (req, res) => {
+app.delete("/api/Roomsd", async (req, res) => {
   try {
     await RoomsSch.deleteMany({})
     res.json({ message: "All documents deleted successfully" });
@@ -280,7 +280,7 @@ app.delete("/Roomsd", async (req, res) => {
 
 ///// CONTACT \\\\\\
 //  get all Contact
-app.get('/Contact',async(req,res)=>{
+app.get('/api/Contact',async(req,res)=>{
   try {
       const Contact=await ContactSchema.find();
       res.json(Contact)
@@ -291,7 +291,7 @@ app.get('/Contact',async(req,res)=>{
 
 })
 //  ajouter nouveau Rooms
-app.post('/Contact',async(req,res)=>{
+app.post('/api/Contact',async(req,res)=>{
 
 try {
   const {name,email,subject,msg} = req.body;
@@ -303,7 +303,7 @@ try {
 }
 
 })
-app.delete("/Contact", async (req, res) => {
+app.delete("/api/Contact", async (req, res) => {
   try {
     await ContactSchema.deleteMany({})
     res.json({ message: "All documents deleted successfully" });
@@ -313,7 +313,7 @@ app.delete("/Contact", async (req, res) => {
 });
 
 ///// BOKING \\\\\\
-app.get('/Booking',async(req,res)=>{
+app.get('/api/Booking',async(req,res)=>{
   try {
       const Booking=await BookingSchema.find();
       res.json(Booking)
@@ -322,7 +322,7 @@ app.get('/Booking',async(req,res)=>{
   }
 })
 //  ajouter nouveau Booking
-app.post('/Booking',async(req,res)=>{
+app.post('/api/Booking',async(req,res)=>{
 
 try {
   const {nameC,email,nameR,prix,check_in,check_out} = req.body;
@@ -340,7 +340,7 @@ try {
 
 })
 // update Rooms
-app.put('/Booking/:id',async(req,res)=>{
+app.put('/api/Booking/:id',async(req,res)=>{
   try {
     const {nameC,email,nameR,prix,check_in,check_out}  = req.body;
     const uBooking=await BookingSchema.findByIdAndUpdate({_id:req.params.id},
@@ -351,7 +351,7 @@ app.put('/Booking/:id',async(req,res)=>{
   }
   
   })
-app.delete('/Booking/:id',async(req,res)=>{
+app.delete('/api/Booking/:id',async(req,res)=>{
   try {
     const dBooking=await BookingSchema.findByIdAndDelete({_id:req.params.id});
     res.json(dBooking)
@@ -360,7 +360,7 @@ app.delete('/Booking/:id',async(req,res)=>{
     res.json(error)
   }
   })
-app.delete("/Bookingd", async (req, res) => {
+app.delete("/api/Bookingd", async (req, res) => {
   try {
     await BookingSchema.deleteMany({})
     res.json({ message: "All documents deleted successfully" });
@@ -369,7 +369,7 @@ app.delete("/Bookingd", async (req, res) => {
   }
 });
 
-app.delete("/BookingdAll", async (req, res) => {
+app.delete("/api/BookingdAll", async (req, res) => {
   try {
     const { bookings } = req.body;
     await BookingSchema.deleteMany({ _id: { $in: bookings } });

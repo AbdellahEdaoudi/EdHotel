@@ -33,7 +33,7 @@ function page() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:4444/api/auth/login",
+        `${process.env.NEXTAUTH_URL}/api/auth/login`,
         {
           email,
           pass,

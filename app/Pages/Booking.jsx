@@ -14,7 +14,7 @@ export  function Booking() {
     const DeleteAll = () => {
       const userBookings = Booking.filter((bk) => bk.email === data?.user.email);
     
-      axios.delete("http://localhost:4444/BookingdAll", {
+      axios.delete(`${process.env.NEXTAUTH_URL}/api/BookingdAll`, {
         data: { bookings: userBookings }
       })
       .then(data => {
@@ -26,7 +26,7 @@ export  function Booking() {
     
 
     const Delete = (id) => {
-      axios.delete(`http://localhost:4444/Booking/${id}`)
+      axios.delete(`${process.env.NEXTAUTH_URL}/api/Booking/${id}`)
           .then(data => {
               console.log(data);
               window.location.reload();
@@ -35,7 +35,7 @@ export  function Booking() {
       }
     
     useEffect(() => {
-      axios.get('http://localhost:4444/Booking')
+      axios.get(`${process.env.NEXTAUTH_URL}/api/Booking`)
         .then((res) => setBooking(res.data))
     },[]);
 

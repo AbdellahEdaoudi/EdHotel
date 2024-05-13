@@ -24,7 +24,7 @@ function page() {
     // Hash the password
     try {
       const response = await Axios.post(
-        "http://127.0.0.1:4444/api/auth/register",
+        `${process.env.NEXTAUTH_URL}/api/auth/register`,
         { name, email, pass },
         {
           headers: { "Content-Type": "application/json" },
