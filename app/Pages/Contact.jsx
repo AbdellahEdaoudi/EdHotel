@@ -40,7 +40,7 @@ function Contact() {
         toast("sent succesfully", {
           type: "success", // Can be 'success', 'error', 'info', etc.
           position: "top-center", // Adjust position as needed
-          autoClose: 3000, // Milliseconds before auto-dismissal
+          autoClose: 2000, // Milliseconds before auto-dismissal
         });
         // router.push("/")
         setName("");
