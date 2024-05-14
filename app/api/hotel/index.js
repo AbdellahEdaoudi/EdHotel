@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 app.use(express.json());
-const User = require("../Models/UserSchema");
-const RoomsSch = require("../Models/hotelSchema");
-const ContactSchema = require('../Models/ContactSchema');
-const BookingSchema = require('../Models/BookingSchema');
+const User = require("./Models/UserSchema");
+const RoomsSch = require("./Models/hotelSchema");
+const ContactSchema = require('./Models/ContactSchema');
+const BookingSchema = require('./Models/BookingSchema');
 const PORT = process.env.PORT || 4444;
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
@@ -15,7 +15,8 @@ app.use(cors());
 
 // CORS middleware
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://edhotel.vercel.app');
+ // https://edhotel.vercel.app
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -53,7 +54,7 @@ app.listen(PORT, () => {
 });
 
 // Get users
-app.get("/users", VerifyToken, async (req, res) => {
+app.get("/users", async (req, res) => {
   const users = await User.find().select("-pass").lean();
   if (!users.length) {
     return res.status(400).json({ message: "No users found" });
@@ -208,12 +209,13 @@ app.get('/api/Rooms',async(req,res)=>{
   }
 
 })
+
 //  ajouter nouveau Rooms
 app.post('/api/Rooms',async(req,res)=>{
 
 try {
-  const {imageUrl, name, type, capacity, prix} = req.body;
-  const nRooms= new RoomsSch({imageUrl, name, type, capacity, prix});
+  const {imageUrl, name, type,description, capacity, prix} = req.body;
+  const nRooms= new RoomsSch({imageUrl, name, type,description, capacity, prix});
   const Rooms= await nRooms.save();
   res.json(Rooms);
 } catch (error) {
@@ -247,9 +249,9 @@ try {
 app.put('/api/Rooms/:id',async(req,res)=>{
 
 try {
-  const { imageUrl, name, type, capacity, prix } = req.body;
+  const { imageUrl, name, type,description, capacity, prix } = req.body;
   const uRooms=await RoomsSch.findByIdAndUpdate({_id:req.params.id},
-    { imageUrl, name, type, capacity, prix },{new:true});
+    { imageUrl, name, type,description, capacity, prix },{new:true});
   res.json(uRooms)
   
 } catch (error) {

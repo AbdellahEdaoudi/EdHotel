@@ -14,7 +14,7 @@ export  function Booking() {
     const DeleteAll = () => {
       const userBookings = Booking.filter((bk) => bk.email === data?.user.email);
     
-      axios.delete(`${process.env.NEXTAUTH_URL}/api/BookingdAll`, {
+      axios.delete(`https://ed-hotel-api.vercel.app/BookingdAll`, {
         data: { bookings: userBookings }
       })
       .then(data => {
@@ -26,7 +26,7 @@ export  function Booking() {
     
 
     const Delete = (id) => {
-      axios.delete(`${process.env.NEXTAUTH_URL}/api/Booking/${id}`)
+      axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`)
           .then(data => {
               console.log(data);
               window.location.reload();
@@ -35,7 +35,7 @@ export  function Booking() {
       }
     
     useEffect(() => {
-      axios.get(`${process.env.NEXTAUTH_URL}/api/Booking`)
+      axios.get('https://ed-hotel-api.vercel.app/Booking')
         .then((res) => setBooking(res.data))
     },[]);
 

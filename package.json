@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"nodemon app/backend/auth/index.js\"",
+    "dev": "concurrently \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

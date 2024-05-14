@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -24,7 +25,7 @@ function Rooms() {
     }, [router, status]);
   
     useEffect(() => {
-      axios.get(`${process.env.NEXTAUTH_URL}/api/Rooms`)
+      axios.get('https://ed-hotel-api.vercel.app/Rooms')
         .then((res) => setdataH(res.data))
     },[]);
   

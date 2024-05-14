@@ -30,7 +30,7 @@ function Contact() {
       try {
         setIsLoading(true);
         const response = await axios.post(
-          `${process.env.NEXTAUTH_URL}/api/Contact`,
+          `https://ed-hotel-api.vercel.app/Contact`,
           { name, email,subject, msg },
           {
             headers: { "Content-Type": "application/json" },

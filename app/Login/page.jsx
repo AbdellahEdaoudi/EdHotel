@@ -33,7 +33,7 @@ function page() {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXTAUTH_URL}/api/auth/login`,
+        `https://ed-hotel-api.vercel.app/login`,
         {
           email,
           pass,
