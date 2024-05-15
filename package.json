@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.7.1",
+    "@stripe/stripe-js": "^3.4.0",
+    "stripe":"13.2.0",
     "animate.css": "^4.1.1",
     "aws-sdk": "^2.1576.0",
     "axios": "^1.6.7",

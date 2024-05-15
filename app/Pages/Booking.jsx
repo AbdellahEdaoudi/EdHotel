@@ -46,15 +46,26 @@ export  function Booking() {
   console.log('====================================');
   console.log(data?.user.email);
   console.log('====================================');
-   
+
+  const getTotal = () => {
+    let Total = 0;
+    Booking.filter((bk) => bk.email === data?.user.email).reduce((tt, total) => {
+      Total += total.prix; 
+    }, 0);
+    return Total;
+  };
+  
   
       return (
         <div className="pb-16 mt-5">
+          <div className={`float-end mx-5 md:mx-32 ${Booking.filter((bk) => bk.email === data?.user.email).length === 0 ? "hidden" : ""}`}>
           <button onClick={DeleteAll} 
-          className={`p-2 bg-amber-400 rounded-md mx-5 md:mx-32  text-black w-56 float-end 
-          ${Booking.filter((bk) => bk.email === data?.user.email).length === 0 ? "hidden" : ""}`}>
+          className={`p-2 bg-amber-400 rounded-md mr-2 text-black w-56  
+          `}>
            CANCEL ALL  RESERVATION
-          </button><br />
+          </button>
+            <button onClick={()=> router.push(`/Checkout?amount=${getTotal()}`)} className="p-2 bg-sky-500 rounded-md text-black  ">CHECKOUT</button>
+          </div> <br /><br />
           {Booking.filter((bk) => bk.email === data?.user.email).length > 0 ? 
           Booking.filter((bk) => bk.email === data?.user.email).map((bk,i)=>{
           const checkInDate = new Date(bk.check_in);
