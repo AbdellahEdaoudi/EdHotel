@@ -8,16 +8,16 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHER_KEY);
 
 
 function page() {
-    const serchParams = useSearchParams()
+    const SearchParams = useSearchParams()
     const options = {
         mode :"payment",
         currency:"usd",
-        amount: Number(serchParams.get('amount')) * 100
+        amount: Number(SearchParams.get('amount')) * 100
     }
   return (
     <Elements stripe={stripePromise} options={options}>
         
-      <CheckoutForm amount={Number(serchParams.get('amount'))} />
+      <CheckoutForm amount={Number(SearchParams.get('amount'))} />
     </Elements>
   )
 }
