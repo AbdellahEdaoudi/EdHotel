@@ -1,9 +1,10 @@
+"use client"
 import React from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '../Pages/CheckoutForm';
 import { useSearchParams } from 'next/navigation';
-import { SuspenseBoundary } from 'react ';
+import { SuspenseBoundary } from 'react';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHER_KEY);
 
