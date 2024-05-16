@@ -43,9 +43,9 @@ export  function Booking() {
       const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
       {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push("/Booking")}
     }, [router]);
-  console.log('====================================');
-  console.log(data?.user.email);
-  console.log('====================================');
+      console.log('====================================');
+      console.log(data?.user.email);
+      console.log('====================================');
 
   const getTotal = () => {
     let Total = 0;

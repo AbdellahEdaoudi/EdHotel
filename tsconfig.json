@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/api/auth/[...nextauth]/route.ts", "app/Pages/SignInWithGoogle.jsx", "app/Checkout/page.jsx"  ],
+, "app/api/auth/[...nextauth]/route.ts", "app/Pages/SignInWithGoogle.jsx", "app/Checkout/page.jsx", "app/components/email-template.tsx"  ],
   "exclude": [
     "node_modules"
   ]

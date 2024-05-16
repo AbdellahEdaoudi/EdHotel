@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-email/components": "0.0.17",
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.4.0",
-    "stripe":"13.2.0",
     "animate.css": "^4.1.1",
     "aws-sdk": "^2.1576.0",
     "axios": "^1.6.7",
@@ -32,8 +32,11 @@
     "nodemon": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-email": "2.1.2",
     "react-notifications-component": "^4.0.1",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "resend": "^3.2.0",
+    "stripe": "13.2.0"
   },
   "devDependencies": {
     "@types/react": "18.2.51",

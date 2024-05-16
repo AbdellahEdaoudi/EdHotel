@@ -75,8 +75,8 @@ function Contact() {
         <div>
           {/* CONTACT */}
           <div className="w-full h-full mt-7 text-center">
-            <div className="text-amber-400 mb-2 text-xl font-bold">__---- CONTACT US ----__</div>
-            <div className="text-4xl mb-10 text-black font-bold">Contact <span className="text-amber-400 ">FOR ANY QUERY</span></div>
+            <h6 className="text-amber-400 mb-2 text-xl font-bold">__---- CONTACT US ----__</h6>
+            <h1 className="text-4xl mb-10 text-black font-bold">Contact <span className="text-amber-400 ">FOR ANY QUERY</span></h1>
           </div>
           <div className="text-amber-500 md:space-y-0  space-y-7 md:flex md:justify-between mx-5 md:mx-16  mb-5 ">
             <span className="font-bold">BOKING   ----- <span className="flex gap-2 text-gray-500 font-normal">{emaill} book@Hotel.app</span></span>
