@@ -196,10 +196,10 @@ function page() {
               <div className="flex items-center justify-between">
               <p className="text-sm text-white ">
                   <h6>No account?</h6>
-                  <Link className="underline text-blue-500" href="/Register">
+                  {/* <Link className="underline text-blue-500" href="/Register">
                     {" "}
                     Create an account
-                  </Link> 
+                  </Link>  */}
                 </p>
                <SignInWithGoogle />
               </div>

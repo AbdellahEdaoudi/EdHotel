@@ -28,7 +28,7 @@ function Header() {
           <div className="flex h-16 items-center justify-between">
               <Link className="flex items-center text-yellow- gap-2 " href="/">
                 <img src={"/Logo-my-hotel-app.png"} width={70} height={10} />
-                <h1 className="text-2xl font-bold  ">EdHotel</h1>
+                <p className="text-2xl font-bold  ">EdHotel</p>
               </Link>
               {/* LES LINK */}
             <div className="hidden md:block">

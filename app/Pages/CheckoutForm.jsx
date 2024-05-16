@@ -61,7 +61,7 @@ const CheckoutForm = ({amount}) => {
     <form onSubmit={handleSubmit}>
       <div className='mx-10 md:mx-72 my-28'>
         <PaymentElement />
-      <button className='w-full rounded-md py-3 bg-sky-600 text-white mt-2'>Submit</button>
+      <button className='w-full rounded-md py-3 bg-sky-600 text-white mt-3'>Submit</button>
         </div>
         <ToastContainer />
     </form>
