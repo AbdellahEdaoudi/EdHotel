@@ -7,7 +7,7 @@ import SignInWithGoogle from "./SignInWithGoogle";
 import { LogOut } from "lucide-react";
 function Header() {
   const [menu, setMenu] = useState(false);
-  const [link, setLink] = useState("Home");
+  const [link, setLink] = useState("");
   const router = useRouter();
   const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
   const nameuser = typeof window !== 'undefined' ? localStorage.getItem("nameuser") : null;
