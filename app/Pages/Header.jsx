@@ -174,7 +174,7 @@ function Header() {
                 
               >
                 {" "}
-                About{" "}
+                ABOUT{" "}
               </Link>
             </li>
             <li>
@@ -189,7 +189,7 @@ function Header() {
                 
               >
                 {" "}
-                Services{" "}
+                SERVICES{" "}
               </Link>
             </li>
 

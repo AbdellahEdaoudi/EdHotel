@@ -78,8 +78,8 @@ function page() {
 
   return (
     <div style={{backgroundImage: `url('image.jpg')`}}
-     className="flex items-center  justify-center  text-black -mt-20 ">
-      <section className=" flex items-center px-10 py-7 mt-[108px] mb-20   rounded-lg justify-center border-2 backdrop-blur-lg ">
+     className="flex items-center  justify-center  text-black -mt-20 w-full ">
+      <section className=" px-4  md:px-10 py-7  mt-[108px] mb-20    rounded-lg justify-center border-2 backdrop-blur-lg ">
         <div className="">
           <div className=" text-center text-stone-300">
             <img
