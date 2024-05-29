@@ -12,7 +12,7 @@ function AddRoom({setAdmin}) {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     try {
-      const response = await axios.post('http://localhost:4444/Rooms', formData);
+      const response = await axios.post('https://ed-hotel-api.vercel.app/Rooms', formData);
       console.log(response.data);
       toast("Room added successfully", {
         type: "success",

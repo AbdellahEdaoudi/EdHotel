@@ -45,7 +45,7 @@ function Page({ params }) {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     try {
-      const response = await axios.put(`http://localhost:4444/Rooms/${params.AdmId}`, formData);
+      const response = await axios.put(`https://ed-hotel-api.vercel.app/Rooms/${params.AdmId}`, formData);
       console.log(response.data);
       toast("Room Update successfully", {
         type: "success",

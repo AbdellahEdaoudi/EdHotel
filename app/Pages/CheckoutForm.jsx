@@ -22,7 +22,7 @@ const CheckoutForm = ({amount}) => {
     
       const fetchData = async () => {
         try {
-          const res = await axios.get('http://localhost:4444/Booking');
+          const res = await axios.get('https://ed-hotel-api.vercel.app/Booking');
           setBooking(res.data);
           setBookinge((res.data).filter((bk) => bk.email === data?.user.email));
         } catch (error) {
@@ -46,7 +46,7 @@ const CheckoutForm = ({amount}) => {
 
     
     const sendpayment = ()=>{
-    axios.post('http://localhost:4444/CheckoutDoc',Bookinge)
+    axios.post('https://ed-hotel-api.vercel.app/CheckoutDoc',Bookinge)
         .then(response => {
             console.log('Payment successfully:', response.data);
             toast('Payment successfully!', {

@@ -12,7 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Admin() {
-  const AdminStg = localStorage.getItem("admin");
+  const AdminStg = typeof window !== 'undefined' ? localStorage.getItem("admin") : null;
   const [Admin, setAdmin] = useState(AdminStg || "ROOMS");
   const { data, status } = useSession();
   const router = useRouter();

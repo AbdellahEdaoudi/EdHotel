@@ -7,7 +7,7 @@ function ABooking() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('http://localhost:4444/Booking');
+        const response = await axios.get('https://ed-hotel-api.vercel.app/Booking');
         setBookings(response.data);
       } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -22,7 +22,7 @@ function ABooking() {
   const DeleteAll = async () => {
     if (window.confirm('Are you sure you want to delete all bookings?')) {
       try {
-        const response = await axios.delete('http://localhost:4444/Bookingd');
+        const response = await axios.delete('https://ed-hotel-api.vercel.app/Bookingd');
         console.log(response.data.message);
         setBookings([]);
       } catch (error) {
@@ -34,7 +34,7 @@ function ABooking() {
   const Delete = async (id) => {
     if (window.confirm('Are you sure you want to delete this booking?')) {
       try {
-        const response = await axios.delete(`http://localhost:4444/Booking/${id}`);
+        const response = await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
         console.log(response.data.message);
         setBookings(bookings.filter(booking => booking._id !== id));
       } catch (error) {
