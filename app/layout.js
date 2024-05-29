@@ -16,9 +16,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" >
-      <head>
-      <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-      </head>
       <body className={`${prompt.className}`}>
         <NextAuthProvider>
           <div className="sticky top-0   z-10">

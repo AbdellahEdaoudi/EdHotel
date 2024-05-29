@@ -35,9 +35,14 @@ export  function Booking() {
       }
     
     useEffect(() => {
+    const intervalId = setInterval(() => {
       axios.get('https://ed-hotel-api.vercel.app/Booking')
-        .then((res) => setBooking(res.data))
-    },[]);
+        .then(res => setBooking(res.data))
+        .catch(error => console.error('Error fetching bookings:', error));
+    }, 1);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
     useEffect(() => {
       const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
@@ -60,11 +65,11 @@ export  function Booking() {
         <div className="pb-16 mt-5">
           <div className={`float-end mx-5 md:mx-32 ${Booking.filter((bk) => bk.email === data?.user.email).length === 0 ? "hidden" : ""}`}>
           <button onClick={DeleteAll} 
-          className={`p-2 bg-amber-400 rounded-md mr-2 text-black w-56  
+          className={`p-2 bg-amber-400 rounded-md mr-2 text-black   
           `}>
            CANCEL ALL  RESERVATION
           </button>
-            <button onClick={()=> router.push(`/Checkout?amount=${getTotal()}`)} className="p-2 bg-sky-500 rounded-md text-black  ">CHECKOUT</button>
+            <button onClick={()=> router.push(`/Checkout?amount=${getTotal()}`)} className="p-2 bg-sky-500 rounded-md text-black  ">PAYING</button>
           </div> <br /><br />
           {Booking.filter((bk) => bk.email === data?.user.email).length > 0 ? 
           Booking.filter((bk) => bk.email === data?.user.email).map((bk,i)=>{

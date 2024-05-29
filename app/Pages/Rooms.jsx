@@ -27,9 +27,9 @@ function Rooms() {
     useEffect(() => {
       axios.get('https://ed-hotel-api.vercel.app/Rooms')
         .then((res) => setdataH(res.data))
-    },[]);
+    },[]);  
   
-  
+
       return (
         <div className=" pb-10">
           <div className="w-full h-full mt-6 text-center pb-5">

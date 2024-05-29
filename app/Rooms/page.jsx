@@ -2,9 +2,6 @@
 import React from "react";
 import Test from "../Pages/Test"
 import Rooms from "../Pages/Rooms";
-
-
-
 export default function Page() {
 
     return (

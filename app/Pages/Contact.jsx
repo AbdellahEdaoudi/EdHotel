@@ -11,11 +11,13 @@ function Contact() {
     const {data,status}=useSession()
     const nameuser = typeof window !== 'undefined' ? localStorage.getItem("nameuser") : null;
     const emaill = <img src="email.png" alt="star.png" width={22} height={11}/>
-    const [name, setName] = useState(`${data?.user?.name} ${nameuser}`);
+    const [name, setName] = useState(data?.user?.name);
     const [email, setEmail] = useState(data?.user?.email);
     const [subject, setsubject] = useState("");
     const [msg, setMsg] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    
   
     const PostContact = async (e) => {
       e.preventDefault();
@@ -55,7 +57,7 @@ function Contact() {
         toast("An error occurred. Please try again.", {
           type: "error", // Can be 'success', 'error', 'info', etc.
           position: "top-center", // Adjust position as needed
-          autoClose: 3000, // Milliseconds before auto-dismissal
+          autoClose: 2000, // Milliseconds before auto-dismissal
         });
       }finally {
         setIsLoading(false); 
@@ -98,7 +100,7 @@ function Contact() {
          </div>
             <div className="md:w-1/2 w-full ">
               <nav className=" md:flex">
-                <input value={`${data?.user?.name ? `${data?.user?.name}` : `${nameuser}` }`} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Your Name"  className=" mr-3 p-4 mb-5 bg-white text-black rounded-md border  w-full" />
+                <input value={data?.user?.name} onChange={(e)=>{setName(e.target.value)}} type="text" placeholder="Your Name"  className=" mr-3 p-4 mb-5 bg-white text-black rounded-md border  w-full" />
                 <input value={data?.user?.email} onChange={(e)=>{setEmail(e.target.value)}} type="text" placeholder="Your Email" className="p-4 mb-5 bg-white text-black rounded-md border w-full" />
               </nav>
               <input onChange={(e)=>{setsubject(e.target.value)}} placeholder="Subject" type="text" className="p-4 mb-5 bg-white text-black rounded-md border w-full" />
