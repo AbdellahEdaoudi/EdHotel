@@ -4,6 +4,7 @@ import axios from 'axios';
 import { differenceInDays, format, parseISO } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +17,7 @@ const CheckoutForm = ({ amount }) => {
   const [Booking, setBooking] = useState([]);
   const [Bookinge, setBookinge] = useState([]);
   const { data, status } = useSession();
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +55,7 @@ const CheckoutForm = ({ amount }) => {
         position: 'top-center',
         autoClose: 1000,
       });
+      router.push("/payment-confirm")
     } catch (error) {
       console.error('Error adding Payment:', error);
       toast('Error adding Payment!', {
