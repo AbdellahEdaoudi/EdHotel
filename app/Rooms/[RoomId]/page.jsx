@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { differenceInDays, parseISO } from "date-fns";
 
-function Page({ params }) {
+function page({ params }) {
   const router = useRouter();
   const { data, status } = useSession();
   const [rm, setRm] = useState({});
