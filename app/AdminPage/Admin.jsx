@@ -1,5 +1,5 @@
 "use client";
-import { FolderDot } from "lucide-react";
+import { FolderDot, LogOut } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import ARooms from "./ARooms";
 import ABooking from "./ABooking";
@@ -17,17 +17,15 @@ function Admin() {
   const { data, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (data?.user?.email === "abdellahedaoudi80@gmail.com") {
-      router.push("/Admin");
-    } else {
-      router.push("/HomePage");
-    }
-  }, [data, router]);
 
   useEffect(() => {
     localStorage.setItem("admin", Admin);
   }, [Admin]);
+
+  const Logout =  () => {
+    localStorage.removeItem("accessTokenAdmin");
+    router.push("/AdminLogin")
+  };
 
   const AdminPages = () => {
     switch (Admin) {
@@ -68,9 +66,16 @@ function Admin() {
   return (
     <div className="flex h-full border-b-2">
       <div className="flex flex-col bg-gray-800 p-4 md:w-auto w-1/2">
-        <button className=" md:w-60 p-2 rounded-md font-medium  text-black py-4 mb-16 bg-white flex gap-2 justify-center">
-          <FolderDot /> ADMIN PAGE
+        <button className=" md:w-60 p-2 rounded-md font-medium  text-black py-4 mb-16 bg-white flex gap-2 items-center justify-around">
+        <span title="LogOut "
+                  className="bg-red-500 p-1 rounded-md text-white"
+                  onClick={Logout}
+                >
+                  <LogOut />
+          </span>
+          <span className="flex gap-2"><FolderDot /> ADMIN PAGE </span>
         </button>
+        
         <button
           onClick={() => setAdmin("ROOMS")}
           className={`${
