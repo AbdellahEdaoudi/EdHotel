@@ -27,7 +27,6 @@ export function Booking() {
       await axios.delete('https://ed-hotel-api.vercel.app/BookingdAll', {
         data: { bookings: userBookings }
       });
-      window.location.reload();
     } catch (error) {
       console.error('Error deleting bookings:', error);
     }
@@ -36,14 +35,13 @@ export function Booking() {
   const deleteBooking = async (id) => {
     try {
       await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
-      window.location.reload();
     } catch (error) {
       console.error('Error deleting booking:', error);
     }
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const intervalId = setInterval(()=>{
       fetchBookings();
     }, 1000);
 

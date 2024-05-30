@@ -75,7 +75,7 @@ function AContact() {
                   <td className="px-6 py-4 whitespace-normal border">{contact.email}</td>
                   <td className="px-6 py-4 whitespace-normal border">{contact.subject}</td>
                   <td className="px-6 py-4 whitespace-normal border">{contact.msg}</td>
-                  <td className="px-6 py-4 whitespace-normal border">{`${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()}/${new Date(contact.created_at).getDate()} 
+                  <td className="px-6 py-4 whitespace-normal border">{`${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()+1}/${new Date(contact.created_at).getDate()} 
                                                                         ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}`}</td>
                   <td className="px-6 py-4 whitespace-normal border">
                     <button onClick={() => DeleteContact(contact._id)} className="bg-red-500 text-white p-2 rounded-md hover:text-red-900">
