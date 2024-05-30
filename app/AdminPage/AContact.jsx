@@ -62,6 +62,7 @@ function AContact() {
               <tr>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Name</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Email</th>
+                <th className="px-6 py-3 text-left font-medium text-gray-500 border">subject</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Message</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Date/Time</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Actions</th>
@@ -72,6 +73,7 @@ function AContact() {
                 <tr key={index} className='border-b-2'>
                   <td className="px-6 py-4 whitespace-normal border ">{contact.name}</td>
                   <td className="px-6 py-4 whitespace-normal border">{contact.email}</td>
+                  <td className="px-6 py-4 whitespace-normal border">{contact.subject}</td>
                   <td className="px-6 py-4 whitespace-normal border">{contact.msg}</td>
                   <td className="px-6 py-4 whitespace-normal border">{`${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()}/${new Date(contact.created_at).getDate()} 
                                                                         ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}`}</td>
