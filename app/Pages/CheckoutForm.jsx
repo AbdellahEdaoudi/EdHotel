@@ -140,7 +140,7 @@ const CheckoutForm = ({ amount }) => {
             );
           }
         }) :
-        <div className="h-96 w-full text-center animate-pulse bg-gray-500"></div>
+        null
       }
       <ToastContainer />
     </form>
