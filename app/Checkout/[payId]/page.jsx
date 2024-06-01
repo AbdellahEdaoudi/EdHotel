@@ -11,22 +11,46 @@ function Page({ params }) {
   const formRef = useRef(null);
   const { data } = useSession();
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("Edhotel Contact");
+  const [subject, setSubject] = useState("");
   const [html, setHtml] = useState("");
   const [name, setName] = useState("");
+  const [nameR, setnameR] = useState("");
+  const [id, setid] = useState("");
+  const [check_in, setcheck_in] = useState("");
+  const [check_out, setcheck_out] = useState("");
 
   useEffect(() => {
-    axios.get(`https://ed-hotel-api.vercel.app/Contact/${params.ContactId}`)
+    axios.get(`https://ed-hotel-api.vercel.app/Checkout/${params.payId}`)
       .then((res) => {
         setEmail(res.data.email);
-        setSubject(res.data.subject || "Edhotel Contact");
-        setHtml(res.data.html);
-        setName(res.data.name)
+        setSubject(`Cancellation Of Paynig`);
+        setName(res.data.nameC);
+        setnameR(res.data.nameR);
+        setid(res.data._id);
+        const checkInDate = new Date(res.data.check_in);
+        const checkOutDate = new Date(res.data.check_out);
+        const checkInString = `${checkInDate.getFullYear()}-${checkInDate.getMonth() + 1}-${checkInDate.getDay()}`;
+        const checkOutString = `${checkOutDate.getFullYear()}-${checkOutDate.getMonth() + 1}-${checkOutDate.getDay()}`;
+        setcheck_in(checkInString);
+        setcheck_out(checkOutString);
+        setHtml(`Your Paynig about reservation for the ${res.data.nameR} room from ${checkInString} to ${checkOutString} has been cancelled`);
       })
       .catch((error) => {
         console.error('Error fetching contact:', error);
       });
-  }, [params.ContactId]);
+  }, [params.payId]);
+
+  const Delete = async (id) => {
+    if (window.confirm('Are you sure you want to cancel this booking?')) {
+      try {
+        const response = await axios.delete(`https://ed-hotel-api.vercel.app/Checkout/${id}`);
+        console.log(response.data.message);
+        setBookings(bookings.filter(booking => booking._id !== id));
+      } catch (error) {
+        console.error(`Error deleting booking with ID ${id}:`, error);
+      }
+    }
+  };
 
   const sendEmail = async (e) => {
     e.preventDefault();
@@ -37,12 +61,13 @@ function Page({ params }) {
         subject,
         html,
       });
+      Delete(id);
       toast("Email sent successfully", {
         type: "success",
         position: "top-center",
         autoClose: 1000,
       });
-      setTimeout(()=>{router.push('/Admin')},2000)
+      setTimeout(() => { router.push('/Admin') }, 2000);
     } catch (error) {
       console.error("Error sending email:", error);
       toast("Failed to send email", {
@@ -79,19 +104,19 @@ function Page({ params }) {
         ))}
       </div>
       <div style={{
-      backgroundImage: `url('/rooms/bg.jpg')`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }} className="flex flex-col p-6 w-full justify-center items-center ">
+        backgroundImage: `url('/rooms/bg.jpg')`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }} className="flex flex-col p-6 w-full justify-center items-center ">
         <form ref={formRef} onSubmit={sendEmail} className="flex flex-col space-y-4 p-12 text-black backdrop-blur-sm rounded-md">
-          <div className="text-center text-white text-3xl">Send Email To {(name).split(' ')[0]}</div>
+          <div className="text-center text-white text-3xl">Cancel Paying For {(name).split(' ')[0]}</div>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            name="to"
-            placeholder=" Email to"
+            name="email"
+            placeholder="Email to"
             required
             className="bg-white p-3 border border-black rounded-md w-[600px]"
           />

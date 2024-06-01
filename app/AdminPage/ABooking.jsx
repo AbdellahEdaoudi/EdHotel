@@ -1,8 +1,11 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 function ABooking() {
   const [bookings, setBookings] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -22,8 +25,20 @@ function ABooking() {
   const DeleteAll = async () => {
     if (window.confirm('Are you sure you want to delete all bookings?')) {
       try {
-        const response = await axios.delete('https://ed-hotel-api.vercel.app/Bookingd');
-        console.log(response.data.message);
+        // Delete all bookings
+        await axios.delete('https://ed-hotel-api.vercel.app/Bookingd');
+        
+        // Get email addresses of all customers
+        const emailAddresses = bookings.map(booking => booking.email);
+
+        // Send email to all customers
+        await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
+          to: emailAddresses,
+          subject: 'Booking Cancellation',
+          html: '<p>Your booking has been canceled.</p>'
+        });
+
+        console.log('Emails sent successfully');
         setBookings([]);
       } catch (error) {
         console.error('Error deleting bookings:', error);
@@ -43,9 +58,15 @@ function ABooking() {
     }
   };
 
+  const filteredBookings = bookings.filter(
+    booking =>
+      booking.nameC.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      booking.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto p-4">
-      <div className="w-full h-full mt-6 text-center pb-5 flex justify-between">
+      <div className="w-full h-full mt-6 text-center pb-5 flex justify-between items-center">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">BOOKINGS</span>
         </h1>
@@ -55,7 +76,16 @@ function ABooking() {
           </button>
         )}
       </div>
-      {bookings.length > 0 ? (
+      <div className="w-full mt-4 mb-6 flex justify-center">
+        <input
+          type="search"
+          placeholder="Search by name or email"
+          className="p-2 border border-gray-300  bg-white rounded-md w-1/3"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      {filteredBookings.length > 0 ? (
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 text-black border">
             <tr>
@@ -65,29 +95,26 @@ function ABooking() {
               <th className="px-6 py-3 text-left font-medium text-gray-500 border">Check-in</th>
               <th className="text-center py-3  font-medium text-gray-500 border">Check-out</th>
               <th className="px-6 py-3 text-left font-medium text-gray-500 border">Price</th>
-              <th className="px-6 py-3 text-center font-medium text-gray-500 border">Actions</th>
+              <th className="px-6 py-3 text-center font-medium text-gray-500 border ">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-x-2 divide-y-2 text-black border-b-2 divide-gray-200">
-            {bookings.map((booking, index) => (
+            {filteredBookings.map((booking, index) => (
               <tr key={index} className="border-b-2">
                 <td className="px-6 py-4 whitespace-normal border">{booking.nameC}</td>
                 <td className="px-6 py-4 whitespace-normal border">{booking.email}</td>
                 <td className="px-6 py-4 whitespace-normal border">{booking.nameR}</td>
                 <td className="px-6 py-4 whitespace-normal border">
-                  {`${new Date(booking.check_in).getFullYear()}/${new Date(booking.check_in).getMonth()}/${new Date(booking.check_in).getDay()}`}
+                  {`${new Date(booking.check_in).getFullYear()}/${new Date(booking.check_in).getMonth() + 1}/${new Date(booking.check_in).getDate()}`}
                 </td>
                 <td className="px-6 py-4 whitespace-normal border">
-                {`${new Date(booking.check_out).getFullYear()}/${new Date(booking.check_out).getMonth()}/${new Date(booking.check_out).getDay()}`}
+                  {`${new Date(booking.check_out).getFullYear()}/${new Date(booking.check_out).getMonth() + 1}/${new Date(booking.check_out).getDate()}`}
                 </td>
                 <td className="px-6 py-4 whitespace-normal border">{`${booking.prix}$`}</td>
-                <td className="px-6 py-4 whitespace-normal border">
-                  <button
-                    onClick={() => Delete(booking._id)}
-                    className="p-2 bg-amber-400 rounded-md hover:bg-amber-500 "
-                  >
-                    Cancel Reservation
-                  </button>
+                <td className="px-6 py-4 whitespace-normal border ">
+                  <Link href={`/Booking/${booking._id}`} className="p-2 bg-amber-400 rounded-md hover:bg-amber-500 ">
+                    Cancel 
+                  </Link>
                 </td>
               </tr>
             ))}

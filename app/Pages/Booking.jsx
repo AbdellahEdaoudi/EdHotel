@@ -41,6 +41,7 @@ export function Booking() {
         return;
       }
       await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+      
     } catch (error) {
       console.error('Error deleting booking:', error);
       alert('Failed to delete booking');

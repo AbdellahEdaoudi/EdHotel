@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 function APaying() {
   const [Checkouts, setCheckouts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -22,8 +24,20 @@ function APaying() {
   const DeleteAll = async () => {
     if (window.confirm("Are you sure you want to delete all Paying?")) {
       try {
-        const response = await axios.delete("https://ed-hotel-api.vercel.app/Checkoutd");
-        console.log(response.data.message);
+        // Delete all bookings
+        await axios.delete("https://ed-hotel-api.vercel.app/Checkoutd");
+
+        // Get email addresses of all customers
+        const emailAddresses = Checkouts.map(booking => booking.email);
+
+        // Send email to all customers
+        await axios.post('/SendEmailAll', {
+          to: emailAddresses,
+          subject: 'Booking Cancellation',
+          html: '<p>Your booking has been cancelled.</p>'
+        });
+
+        console.log('Emails sent successfully');
         setCheckouts([]);
       } catch (error) {
         console.error("Error deleting Paying:", error);
@@ -45,9 +59,15 @@ function APaying() {
     }
   };
 
+  const filteredCheckouts = Checkouts.filter(
+    booking =>
+      booking.nameC.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      booking.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto p-4">
-      <div className="w-full h-full mt-6 text-center pb-5 flex justify-between">
+      <div className="w-full h-full mt-6 text-center pb-5 flex justify-between items-center">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">Paying</span>
         </h1>
@@ -60,7 +80,16 @@ function APaying() {
           </button>
         )}
       </div>
-      {Checkouts.length > 0 ? (
+      <div className="w-full mt-4 mb-6 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          className="p-2 border border-gray-300  bg-white rounded-md w-1/3"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      {filteredCheckouts.length > 0 ? (
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50 text-black border">
             <tr>
@@ -88,7 +117,7 @@ function APaying() {
             </tr>
           </thead>
           <tbody className="bg-white divide-x-2 divide-y-2 text-black border-b-2 divide-gray-200">
-            {Checkouts.map((booking, index) => (
+            {filteredCheckouts.map((booking, index) => (
               <tr key={index} className="border-b-2">
                 <td className="px-6 py-4 whitespace-normal border">
                   {booking.nameC}
@@ -102,21 +131,18 @@ function APaying() {
                 <td className="px-6 py-4 whitespace-normal border">
                   {`${new Date(booking.check_in).getFullYear()}/${new Date(
                     booking.check_in
-                  ).getMonth()}/${new Date(booking.check_in).getDay()}`}
+                  ).getMonth() + 1}/${new Date(booking.check_in).getDate()}`}
                 </td>
                 <td className="px-6 py-4 whitespace-normal border">
                   {`${new Date(booking.check_out).getFullYear()}/${new Date(
                     booking.check_out
-                  ).getMonth()}/${new Date(booking.check_out).getDay()}`}
+                  ).getMonth() + 1}/${new Date(booking.check_out).getDate()}`}
                 </td>
                 <td className="px-6 py-4 whitespace-normal border">{`${booking.prix}$`}</td>
                 <td className="px-6 py-4 whitespace-normal border">
-                  <button
-                    onClick={() => Delete(booking._id)}
-                    className="p-2 bg-amber-400 rounded-md hover:bg-amber-500 "
-                  >
-                    Cancel Paying
-                  </button>
+                  <Link href={`/Checkout/${booking._id}`} className="p-2 bg-amber-400 rounded-md hover:bg-amber-500 ">
+                    Cancel 
+                  </Link>
                 </td>
               </tr>
             ))}
