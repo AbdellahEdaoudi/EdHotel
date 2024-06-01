@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Page from "../Contact/[ContactId]/page";
 
 function Admin() {
   const AdminStg = typeof window !== 'undefined' ? localStorage.getItem("admin") : null;
@@ -64,7 +65,7 @@ function Admin() {
     }
   };
   return (
-    <div className="flex h-full border-b-2">
+    <div  className="flex h-full border-b-2 ">
       <div className="flex flex-col bg-gray-800 p-4 md:w-auto w-1/2">
         <button className=" md:w-60 p-2 rounded-md font-medium  text-black py-4 mb-16 bg-white flex gap-2 items-center justify-around">
         <span title="LogOut "

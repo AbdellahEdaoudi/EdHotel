@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
-import { FolderDot } from "lucide-react";
+import { FolderDot, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -64,25 +64,46 @@ function Page({ params }) {
       });
     }
   };
-
+  const Logout =  () => {
+    localStorage.removeItem("accessTokenAdmin");
+    router.push("/AdminLogin")
+  };
   return (
     <div className="flex border-b-2">
       <div className="flex flex-col bg-gray-800 p-4 md:w-auto w-1/2">
-        <button className=" md:w-60 p-2 rounded-md font-medium  text-black py-4 mb-16 bg-white flex gap-2 justify-center">
-          <FolderDot /> ADMIN PAGE
+      <button className=" md:w-60 p-2 rounded-md font-medium  text-black py-4 mb-16 bg-white flex gap-2 items-center justify-around">
+        <span title="LogOut "
+                  className="bg-red-500 p-1 rounded-md text-white"
+                  onClick={Logout}
+                >
+                  <LogOut />
+          </span>
+          <span className="flex gap-2"><FolderDot /> ADMIN PAGE </span>
         </button>
-        <Link href={"/Admin"} className={` p-2 rounded-md font-medium w-full py-4 mb-7 text-center`}>
+        <span onClick={() => {
+          localStorage.setItem("admin", "ROOMS");
+          router.push('/Admin');
+        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
           ROOMS
-        </Link>
-        <Link href={"/Admin"} className={` p-2 rounded-md font-medium w-full py-4 mb-7 text-center`}>
+        </span>
+        <span onClick={() => {
+          localStorage.setItem("admin", "BOOKING");
+          router.push('/Admin');
+        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
           BOOKING
-        </Link>
-        <Link href={"/Admin"} className={` p-2 rounded-md font-medium w-full py-4 mb-7 text-center`}>
-          CHECKOUTE
-        </Link>
-        <Link href={"/Admin"} className={` p-2 rounded-md font-medium w-full py-4 mb-7 text-center`}>
+        </span>
+        <span onClick={() => {
+          localStorage.setItem("admin", "PAYING");
+          router.push('/Admin');
+        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
+          PAYING
+        </span>
+        <span onClick={() => {
+          localStorage.setItem("admin", "CONTACT");
+          router.push('/Admin');
+        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
           CONTACT
-        </Link>
+        </span>
       </div>
       <div className="flex p-6">
         <form ref={formRef} onSubmit={UpdateRoom} className="flex flex-col space-y-4 p-5">

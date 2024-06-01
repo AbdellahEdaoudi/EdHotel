@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,11 +23,12 @@ function page({params}) {
     const [check_in, setCheckIn] = useState('');
     const [check_out, setCheckOut] = useState('');
     const [Booking,setBooking]=useState([]);
+    const [Paying,setPaying]=useState([]);
 
     useEffect(() => {
-      const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
-      if (!accessToken && status === "unauthenticated") {
-        router.push("/Login");
+      // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+      if (status === "unauthenticated") {
+        signIn("google", {redirect:true, callbackUrl:`/Rooms/${params.RoomId}`})
       } else {
         router.push(`/Rooms/${params.RoomId}`);
       }
@@ -36,6 +37,10 @@ function page({params}) {
     useEffect(() => {
       axios.get(`https://ed-hotel-api.vercel.app/Booking`)
         .then((res) => setBooking(res.data))
+    },[]);
+    useEffect(() => {
+      axios.get(`https://ed-hotel-api.vercel.app/Checkout`)
+        .then((res) => setPaying(res.data))
     },[]);
 
     const PostBoking = async (e) => {
@@ -91,7 +96,30 @@ function page({params}) {
         }
         
       }
-      
+      for (const bkinout of Paying) {
+        if (bkinout.nameR !== nameR) {
+          continue; 
+        }
+        const checkInDateB = new Date(bkinout.check_in);
+        const checkOutDateB = new Date(bkinout.check_out);
+    
+        if (
+          (checkInDate >= checkInDateB && checkInDate < checkOutDateB) || 
+          (checkOutDate > checkInDateB && checkOutDate <= checkOutDateB) ||  
+          (checkInDate <= checkInDateB && checkOutDate >= checkOutDateB)  
+        ) {
+          const DateInInBooking = `${checkInDateB.getFullYear()}-${checkInDateB.getMonth() + 1}-${checkInDateB.getDate()}`;
+          const DateOutInBooking = `${checkOutDateB.getFullYear()}-${checkOutDateB.getMonth() + 1}-${checkOutDateB.getDate()}`;
+          const errorMessage = `Room is already booked for the requested dates. It's booked from ${DateInInBooking} to ${DateOutInBooking}.`;
+          toast(errorMessage, {
+            type: "error",
+            position: "top-center",
+            autoClose: 3000,
+          });
+          return;
+        }
+        
+      }
       if (checkOutDate < checkInDate) {
         toast("Your selected check-out date must be after the check-in date", {
           type: "error",
@@ -137,8 +165,7 @@ function page({params}) {
 }
     };
     useEffect(() => {
-      const accessToken = localStorage.getItem("accessToken");
-      {!accessToken && status==="unauthenticated" ? router.push("/Login"): router.push(`/Rooms/${params.RoomId}`)}
+      {status==="unauthenticated" ? signIn("google", {redirect:true, callbackUrl:`/Rooms/${params.RoomId}`}): router.push(`/Rooms/${params.RoomId}`)}
     }, [router]);
   
 

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import axios from 'axios';
 import Link from 'next/link';
 function Rooms() {
@@ -87,8 +87,22 @@ function Rooms() {
                      <span className="flex gap-1 items-center ">{wifi} Wifi </span>
                     </div>
                     <div className="flex justify-between mt-5">
-                     <Link href={`/Rooms/${rm._id}`}><button className="p-2 rounded-md hover:scale-105 duration-150 bg-yellow-500 text-white">VIEW DETAIL</button></Link>
-                     <Link href={`/Rooms/${rm._id}`}><button className="p-2 rounded-md hover:scale-105 duration-150 bg-black text-white">BOOK NOW</button></Link>
+                     <button onClick={()=>{
+                      if (status === "unauthenticated") {
+                        signIn("google", {redirect:true, callbackUrl:"/Rooms"})
+                      }else{
+                        router.push(`/Rooms/${rm._id}`)
+                      }
+                     }}  className="p-2 rounded-md hover:scale-105 duration-150 bg-yellow-500 text-white">VIEW DETAIL
+                     </button>
+                     <button onClick={()=>{
+                      if (status === "unauthenticated") {
+                        signIn("google", {redirect:true, callbackUrl:"/Rooms"})
+                      }else{
+                        router.push(`/Rooms/${rm._id}`)
+                      }
+                     }}  className="p-2 rounded-md hover:scale-105 duration-150 bg-black text-white">BOOK NOW
+                     </button>
                     </div>
                     </div>
                   </div>

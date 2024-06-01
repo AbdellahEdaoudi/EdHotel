@@ -22,7 +22,8 @@ export function Booking() {
   };
 
   const deleteAllBookings = async () => {
-    const userBookings = bookings.filter((bk) => bk.email === data?.user.email);
+    if (confirm('Are you sure you want to cancel All bookings?')) {
+      const userBookings = bookings.filter((bk) => bk.email === data?.user.email);
     try {
       await axios.delete('https://ed-hotel-api.vercel.app/BookingdAll', {
         data: { bookings: userBookings }
@@ -30,13 +31,27 @@ export function Booking() {
     } catch (error) {
       console.error('Error deleting bookings:', error);
     }
+    }
   };
 
   const deleteBooking = async (id) => {
     try {
+      const confirmed = window.confirm('Are you sure you want to cancel this booking?');
+      if (!confirmed) {
+        return;
+      }
       await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
     } catch (error) {
       console.error('Error deleting booking:', error);
+      alert('Failed to delete booking');
+    }
+  };
+  const deleteBookingAuto = async (id) => {
+    try {
+      await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+    } catch (error) {
+      console.error('Error deleting booking:', error);
+      alert('Failed to delete booking');
     }
   };
 
@@ -71,7 +86,7 @@ export function Booking() {
       const myDate = new Date();
       myDate.setHours(0, 0, 0, 0);
       if (checkOutDate < myDate) {
-        deleteBooking(bk._id);
+        deleteBookingAuto(bk._id);
       }
     });
   }, [bookings]);

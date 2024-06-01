@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 
 function AContact() {
   const [contacts, setContacts] = useState([]);
@@ -73,14 +74,17 @@ function AContact() {
                 <tr key={index} className='border-b-2'>
                   <td className="px-6 py-4 whitespace-normal border ">{contact.name}</td>
                   <td className="px-6 py-4 whitespace-normal border">{contact.email}</td>
-                  <td className="px-6 py-4 whitespace-normal border">{contact.subject}</td>
-                  <td className="px-6 py-4 whitespace-normal border">{contact.msg}</td>
+                  <td className="px-6 py-4 whitespace-normal border w-96">{contact.subject}</td>
+                  <td className="px-6 py-4 whitespace-normal border w-96">{contact.msg}</td>
                   <td className="px-6 py-4 whitespace-normal border">{`${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()+1}/${new Date(contact.created_at).getDate()} 
                                                                         ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}`}</td>
-                  <td className="px-6 py-4 whitespace-normal border">
+                  <td className="px-6 py-4 whitespace-normal border-r-2 flex gap-2 ">
                     <button onClick={() => DeleteContact(contact._id)} className="bg-red-500 text-white p-2 rounded-md hover:text-red-900">
                       Delete
                     </button>
+                    <Link href={`Contact/${contact._id}`} className="bg-green-400 text-white p-2 rounded-md hover:text-green-900 w-28 text-center">
+                      Send Email
+                    </Link>
                   </td>
                 </tr>
               ))}

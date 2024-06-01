@@ -56,7 +56,7 @@ function APaying() {
             onClick={DeleteAll}
             className="p-2 bg-red-400 text-white rounded-md mr-2 hover:bg-red-500"
           >
-            Delete All Paying
+            Cancel All Paying
           </button>
         )}
       </div>
@@ -115,7 +115,7 @@ function APaying() {
                     onClick={() => Delete(booking._id)}
                     className="p-2 bg-amber-400 rounded-md hover:bg-amber-500 "
                   >
-                    Delete Paying
+                    Cancel Paying
                   </button>
                 </td>
               </tr>
