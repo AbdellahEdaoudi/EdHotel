@@ -85,7 +85,7 @@ function Page({ params }) {
         <form ref={formRef} onSubmit={sendEmail} className="flex flex-col space-y-4 p-12 text-black backdrop-blur-sm rounded-md">
           <input
             type="email"
-            value={email}
+            value={data?.user.email}
             onChange={(e) => setEmail(e.target.value)}
             name="to"
             placeholder=" Email to"
