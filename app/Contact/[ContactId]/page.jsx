@@ -15,7 +15,7 @@ function Page({ params }) {
   const [html, setHtml] = useState("");
 
   useEffect(() => {
-    axios.get(`https://edhotel.vercel.app/Contact/${params.ContactId}`)
+    axios.get(`https://ed-hotel-api.vercel.app/Contact/${params.ContactId}`)
       .then((res) => {
         setEmail(res.data.email);
         setSubject(res.data.subject || "Edhotel Contact");
@@ -30,7 +30,7 @@ function Page({ params }) {
     e.preventDefault();
 
     try {
-      await axios.post("https://edhotel.vercel.app/SendEmail", {
+      await axios.post("https://ed-hotel-api.vercel.app/SendEmail", {
         to: email,
         subject,
         html,
@@ -85,7 +85,7 @@ function Page({ params }) {
         <form ref={formRef} onSubmit={sendEmail} className="flex flex-col space-y-4 p-12 text-black backdrop-blur-sm rounded-md">
           <input
             type="email"
-            value={data?.user.email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             name="to"
             placeholder=" Email to"
