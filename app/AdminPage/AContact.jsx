@@ -45,7 +45,7 @@ function AContact() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-1">
       <div className=" w-full h-full mt-6 text-center pb-5 flex justify-between ">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">Contact</span>

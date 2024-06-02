@@ -18,7 +18,7 @@ function Page() {
     if (!accessToken && status === "unauthenticated") {
       router.push("/Login");
     } else {
-      router.push("/HomePage");
+      router.push("/");
     }
   }, [router, status]);
   
