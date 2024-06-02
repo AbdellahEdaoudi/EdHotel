@@ -33,8 +33,8 @@ function APaying() {
         // Send email to all customers
         await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
           to: emailAddresses,
-          subject: 'Booking Cancellation',
-          html: '<p>Your booking has been cancelled.</p>'
+          subject: 'Payment Cancellation',
+          html: '<p>Your Payment has been cancelled.</p>'
         });
 
         console.log('Emails sent successfully');
