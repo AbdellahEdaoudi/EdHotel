@@ -44,7 +44,7 @@ function Page() {
         });
         localStorage.setItem("accessToken", userData.accessToken);
         localStorage.setItem("nameuser", userData.name);
-        window.location.assign("/HomePage");
+        window.location.assign("/");
       } else {
         console.error(
           "Login failed. Server returned:",
