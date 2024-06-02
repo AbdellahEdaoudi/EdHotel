@@ -204,7 +204,7 @@ function page({params}) {
                       <span className="font-bold text-black">Description Room : </span>{rm.description}
                     </div>
                     </div>
-                  </div>
+    </div>
    
    <div className=' text-xl mt-3 text-black w-full   justify-between px-5'>
     {/* Boking */}

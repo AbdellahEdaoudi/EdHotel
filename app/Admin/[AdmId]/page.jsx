@@ -83,25 +83,25 @@ function Page({ params }) {
         <span onClick={() => {
           localStorage.setItem("admin", "ROOMS");
           router.push('/Admin');
-        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
+        }} className="p-2 rounded-md font-medium w-full text-gray-400 py-4 mb-7 text-center cursor-pointer">
           ROOMS
         </span>
         <span onClick={() => {
           localStorage.setItem("admin", "BOOKING");
           router.push('/Admin');
-        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
+        }} className="p-2 rounded-md font-medium w-full text-gray-400 py-4 mb-7 text-center cursor-pointer">
           BOOKING
         </span>
         <span onClick={() => {
           localStorage.setItem("admin", "PAYING");
           router.push('/Admin');
-        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
+        }} className="p-2 rounded-md font-medium w-full text-gray-400 py-4 mb-7 text-center cursor-pointer">
           PAYING
         </span>
         <span onClick={() => {
           localStorage.setItem("admin", "CONTACT");
           router.push('/Admin');
-        }} className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer">
+        }} className="p-2 rounded-md font-medium w-full text-gray-400 py-4 mb-7 text-center cursor-pointer">
           CONTACT
         </span>
       </div>

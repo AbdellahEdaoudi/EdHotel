@@ -95,7 +95,7 @@ function Page({ params }) {
               localStorage.setItem("admin", item);
               router.push("/Admin");
             }}
-            className="p-2 rounded-md font-medium w-full py-4 mb-7 text-center cursor-pointer"
+            className="p-2 rounded-md font-medium text-gray-400 w-full py-4 mb-7 text-center cursor-pointer"
           >
             {item}
           </span>

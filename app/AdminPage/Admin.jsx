@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Page from "../Contact/[ContactId]/page";
 
 function Admin() {
   const AdminStg = typeof window !== 'undefined' ? localStorage.getItem("admin") : null;
@@ -81,7 +80,7 @@ function Admin() {
         <button
           onClick={() => setAdmin("ROOMS")}
           className={`${
-            Admin === "ROOMS" ? "bg-white text-black" : ""
+            Admin === "ROOMS" ? "bg-white text-black" : "text-gray-400"
           } p-2 rounded-md font-medium w-full py-4 mb-7 `}
         >
           ROOMS
@@ -89,7 +88,7 @@ function Admin() {
         <button
           onClick={() => setAdmin("BOOKING")}
           className={`${
-            Admin === "BOOKING" ? "bg-white text-black" : ""
+            Admin === "BOOKING" ? "bg-white text-black" : "text-gray-400"
           } p-2 rounded-md font-medium w-full py-4 mb-7`}
         >
           BOOKING
@@ -97,7 +96,7 @@ function Admin() {
         <button
           onClick={() => setAdmin("PAYING")}
           className={`${
-            Admin === "PAYING" ? "bg-white text-black" : ""
+            Admin === "PAYING" ? "bg-white text-black" : "text-gray-400"
           } p-2 rounded-md font-medium w-full py-4 mb-7`}
         >
           PAYING
@@ -105,7 +104,7 @@ function Admin() {
         <button
           onClick={() => setAdmin("CONTACT")}
           className={`${
-            Admin === "CONTACT" ? "bg-white text-black" : ""
+            Admin === "CONTACT" ? "bg-white text-black" : "text-gray-400"
           } p-2 rounded-md font-medium w-full py-4 mb-7`}
         >
           CONTACT
