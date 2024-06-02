@@ -31,7 +31,7 @@ function APaying() {
         const emailAddresses = Checkouts.map(booking => booking.email);
 
         // Send email to all customers
-        await axios.post('/SendEmailAll', {
+        await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
           to: emailAddresses,
           subject: 'Booking Cancellation',
           html: '<p>Your booking has been cancelled.</p>'
