@@ -65,18 +65,11 @@ function ABooking() {
   );
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-1">
       <div className="w-full h-full mt-6 text-center pb-5 flex justify-between items-center">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">BOOKINGS</span>
         </h1>
-        {bookings.length > 0 && (
-          <button onClick={DeleteAll} className="p-2 bg-red-400 text-white rounded-md mr-2 hover:bg-red-500">
-            Cancel All Bookings
-          </button>
-        )}
-      </div>
-      <div className="w-full mt-4 mb-6 flex justify-center">
         <input
           type="search"
           placeholder="Search by name or email"
@@ -84,9 +77,15 @@ function ABooking() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {bookings.length > 0 && (
+          <button onClick={DeleteAll} className="p-2 bg-red-400 text-white rounded-md mr-2 hover:bg-red-500">
+            Cancel All Bookings
+          </button>
+        )}
       </div>
+      
       {filteredBookings.length > 0 ? (
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-[13px]">
           <thead className="bg-gray-50 text-black border">
             <tr>
               <th className="px-6 py-3 text-left font-medium text-gray-500 border">Name</th>

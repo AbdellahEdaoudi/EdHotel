@@ -41,7 +41,6 @@ function Page({ params }) {
   }, [params.bokId]);
 
   const Delete = async (id) => {
-    if (window.confirm('Are you sure you want to cancel this booking?')) {
       try {
         const response = await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
         console.log(response.data.message);
@@ -49,7 +48,6 @@ function Page({ params }) {
       } catch (error) {
         console.error(`Error deleting booking with ID ${id}:`, error);
       }
-    }
   };
 
   const sendEmail = async (e) => {

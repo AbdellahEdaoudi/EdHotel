@@ -66,11 +66,18 @@ function APaying() {
   );
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-1">
       <div className="w-full h-full mt-6 text-center pb-5 flex justify-between items-center">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">Paying</span>
         </h1>
+        <input
+          type="text"
+          placeholder="Search by name or email"
+          className="p-2 border border-gray-300  bg-white rounded-md w-1/3"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         {Checkouts.length > 0 && (
           <button
             onClick={DeleteAll}
@@ -80,17 +87,8 @@ function APaying() {
           </button>
         )}
       </div>
-      <div className="w-full mt-4 mb-6 flex justify-center">
-        <input
-          type="text"
-          placeholder="Search by name or email"
-          className="p-2 border border-gray-300  bg-white rounded-md w-1/3"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
       {filteredCheckouts.length > 0 ? (
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-[13px] ">
           <thead className="bg-gray-50 text-black border">
             <tr>
               <th className="px-6 py-3 text-left font-medium text-gray-500 border">
