@@ -6,7 +6,7 @@ const  SignInWithGoogle = ()=>{
   return (
     <div
       onClick={() => {
-        signIn("google", {redirect:true, callbackUrl:"/HomePage"})
+        signIn("google", {redirect:true, callbackUrl:"/"})
       }}
       className="flex  items-center gap-2 w-48 text-[14px] cursor-pointer bg-gray-100 p-2 rounded-md"
     >
