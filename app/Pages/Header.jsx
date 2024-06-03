@@ -99,7 +99,7 @@ function Header() {
               <div className="flex gap-2 items-center">
                 <h1
                 className="md:block hidden"
-                >{`Welcom, ${data.user?.name ? data.user?.name.split(" ")[0] :  nameuser }`}</h1>
+                >{`Welcom, ${data?.user?.name ? data.user?.name.split(" ")[0] :  nameuser }`}</h1>
                 <button title="LogOut "
                   className="bg-red-500 p-1 rounded-md text-white"
                   onClick={Logout}

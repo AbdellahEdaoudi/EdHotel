@@ -33,8 +33,8 @@ function Rooms() {
       return (
         <div className=" pb-10">
           <div className="w-full h-full mt-6 text-center pb-5">
-            <h6 className="text-amber-400 mb-2 text-xl font-bold">__---- OUR ROOMS ----__</h6>
-            <h1 className="text-4xl  text-black font-bold">Explore Our <span className="text-amber-400 ">ROOMS</span></h1>
+            <div className="text-amber-400 mb-2 text-xl font-bold">__---- OUR ROOMS ----__</div>
+            <div className="text-4xl  text-black font-bold">Explore Our <span className="text-amber-400 ">ROOMS</span></div>
           </div>
           <div className="text-center space-x-2 text-black mb-5">
             <button onClick={()=>{setFil("")}} className={`${fil === "" ? "bg-yellow-400" :""} p-3 rounded-md`}>ALL</button>

@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SignInWithGoogle from "../Pages/SignInWithGoogle";
+import { useRouter } from "next/navigation";
 
 function Page() {
   const [email, setEmail] = useState("@hotel.app");
@@ -13,6 +14,7 @@ function Page() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const { data, status } = useSession();
+  const router = useRouter()
 
   const Login = async (e) => {
     e.preventDefault();
@@ -44,7 +46,7 @@ function Page() {
         });
         localStorage.setItem("accessToken", userData.accessToken);
         localStorage.setItem("nameuser", userData.name);
-        window.location.assign("/");
+        router.push("/");
       } else {
         console.error(
           "Login failed. Server returned:",
@@ -66,7 +68,14 @@ function Page() {
       });
     }
   };
-
+  useEffect(() => {
+    // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+    if (status === "authenticated") {
+      router.push("/");
+    } else {
+      router.push("/Login");
+    }
+  }, [router, status]);
   return (
     <div style={{
       backgroundImage: `url('image.jpg')`,

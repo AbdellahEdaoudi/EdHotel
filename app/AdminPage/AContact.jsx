@@ -58,7 +58,7 @@ function AContact() {
       </div>
       {contacts.length > 0 ? (
         <div>
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 text-sm">
             <thead className="bg-gray-50 text-black border">
               <tr>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Name</th>

@@ -17,9 +17,9 @@ function page() {
 			 Thank you for choosing our hotel app
 			</h2>
 			<Link
-				href="/"
+				href="/Payment"
 				className='p-2 mt-6 text-white rounded-md bg-sky-500'>
-				Go to Home</Link>
+				Go to Payment Page</Link>
 
 		</div>
 	)

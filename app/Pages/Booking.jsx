@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import axios from "axios";
 import { differenceInDays, format, parseISO } from 'date-fns';
 import { enUS } from 'date-fns/locale';
@@ -11,6 +11,17 @@ export function Booking() {
   const router = useRouter();
   const { data, status } = useSession();
   const [bookings, setBookings] = useState([]);
+  useEffect(() => {
+    // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+    if (status === "unauthenticated") {
+      signIn("google", {redirect:true, callbackUrl:`/Booking`})
+    } else {
+      router.push(`/Booking`);
+    }
+  }, [router, status]);
+  useEffect(() => {
+    {status==="unauthenticated" ? signIn("google", {redirect:true, callbackUrl:`/Booking`}): router.push(`/Booking`)}
+  }, [router]);
 
   const fetchBookings = async () => {
     try {
