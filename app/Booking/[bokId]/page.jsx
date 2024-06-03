@@ -18,12 +18,13 @@ function Page({ params }) {
   const [id, setid] = useState("");
   const [check_in, setcheck_in] = useState("");
   const [check_out, setcheck_out] = useState("");
+  const [because,setBecause]=useState('')
 
   useEffect(() => {
     axios.get(`https://ed-hotel-api.vercel.app/Booking/${params.bokId}`)
       .then((res) => {
         setEmail(res.data.email);
-        setSubject(`Cancellation Of Paying`);
+        setSubject(`Cancellation Of Booking`);
         setName(res.data.nameC);
         setnameR(res.data.nameR);
         setid(res.data._id);
@@ -33,8 +34,13 @@ function Page({ params }) {
         const checkOutString = `${checkOutDate.getFullYear()}-${checkOutDate.getMonth() + 1}-${checkOutDate.getDay()}`;
         setcheck_in(checkInString);
         setcheck_out(checkOutString);
-        setHtml(`Your reservation for the ${res.data.nameR} room from ${checkInString} to ${checkOutString} has been cancelled`);
-      })
+        setHtml(
+          `Your reservation
+          for the <span style="color: #D97706;">${res.data.nameR}</span> room
+           from <span style="color: #D97706;">${checkInString}</span>
+            to <span style="color: #D97706;">${checkOutString}</span>
+             has been cancelled`
+        );})
       .catch((error) => {
         console.error('Error fetching contact:', error);
       });
@@ -52,12 +58,80 @@ function Page({ params }) {
 
   const sendEmail = async (e) => {
     e.preventDefault();
-
+    const printContent = `
+    <html>
+      <head>
+        <title>EdHotel</title>
+        <style>
+          @page {
+            size: A4;
+            margin: 0;
+          }
+          body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            color: #333;
+            background-color: #f9f9f9;
+          }
+          .invoice-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+          }
+          .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          .invoice-header img {
+            max-width: 100px;
+            margin-bottom: 20px;
+          }
+          .invoice-header h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+          }
+          .invoice-details p {
+            font-size: 18px;
+            text-align: center;
+          }
+          .invoice-footer {
+            text-align: center;
+            margin-top: 20px;
+          }
+          .invoice-footer p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="invoice-container">
+          <div class="invoice-header">
+            <h1>EdHotel</h1>
+            <img src="https://res.cloudinary.com/dynprvsfg/image/upload/v1717421518/wprm2rcy3qvhn1jvc1wk.png" alt="Hotel Logo"/>
+          </div>
+          <div class="invoice-details">
+           <p>${html}</p>
+           <p > Because : <span style="color: #D97706;">${because}</span></p>
+          </div>
+          <div class="invoice-footer">
+            <p>Thank you for choosing our hotel!</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
     try {
       await axios.post("https://ed-hotel-api.vercel.app/SendEmail", {
         to: email,
         subject,
-        html,
+        html : printContent,
       });
       Delete(id);
       toast("Email sent successfully", {
@@ -129,9 +203,9 @@ function Page({ params }) {
           />
           <textarea
             name="html"
-            value={html}
-            onChange={(e) => setHtml(e.target.value)}
-            placeholder="Message"
+            value={because}
+            onChange={(e) => setBecause(e.target.value)}
+            placeholder="Reason"
             required
             className="bg-white p-3 border border-black rounded-md"
           />

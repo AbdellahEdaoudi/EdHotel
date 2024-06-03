@@ -23,28 +23,91 @@ function ABooking() {
   }, []);
 
   const DeleteAll = async () => {
-    if (window.confirm('Are you sure you want to delete all bookings?')) {
+    const printContent = `
+    <html>
+      <head>
+        <title>EdHotel Booking</title>
+        <style>
+          @page {
+            size: A4;
+            margin: 0;
+          }
+          body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            color: #333;
+            background-color: #f9f9f9;
+          }
+          .invoice-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+          }
+          .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+          }
+          .invoice-header img {
+            max-width: 100px;
+            margin-bottom: 20px;
+          }
+          .invoice-header h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+          }
+          .invoice-details p {
+            font-size: 18px;
+            text-align: center;
+          }
+          .invoice-footer {
+            text-align: center;
+            margin-top: 20px;
+          }
+          .invoice-footer p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="invoice-container">
+          <div class="invoice-header">
+            <h1>EdHotel</h1>
+            <img src="https://res.cloudinary.com/dynprvsfg/image/upload/v1717421518/wprm2rcy3qvhn1jvc1wk.png" alt="Hotel Logo"/>
+          </div>
+          <div class="invoice-details">
+           <p>Your Booking has been cancelled.</p>
+          </div>
+          <div class="invoice-footer">
+            <p>Thank you for choosing our hotel!</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+    if (window.confirm("Are you sure you want to Cancel all Booking?")) {
       try {
-        // Delete all bookings
-        await axios.delete('https://ed-hotel-api.vercel.app/Bookingd');
-        
-        // Get email addresses of all customers
+        await axios.delete("https://ed-hotel-api.vercel.app/Bookingd");
         const emailAddresses = bookings.map(booking => booking.email);
-
-        // Send email to all customers
         await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
           to: emailAddresses,
           subject: 'Booking Cancellation',
-          html: '<p>Your booking has been canceled.</p>'
+          html: printContent
         });
-
         console.log('Emails sent successfully');
-        setBookings([]);
+        setCheckouts([]);
       } catch (error) {
-        console.error('Error deleting bookings:', error);
+        console.error("Error deleting Paying:", error);
       }
     }
   };
+
 
   const Delete = async (id) => {
     if (window.confirm('Are you sure you want to delete this booking?')) {

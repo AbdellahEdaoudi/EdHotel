@@ -9,7 +9,10 @@ import NextAuthProvider from './providers/NextAuthProvider';
 const inter = Inter({ subsets: ['latin'] });
 const prompt = Prompt({ subsets: ['latin'], weight: '400' });
 export const metadata = {
-  icons : "/LogoFooter.png",
+  icons: {
+    src: "/LogoFooter.png",
+    className: "rounded-md"
+  },
   title: 'EdHotel - Hotel Management Application',
   description:
     'EdHotel is a cutting-edge hotel management application designed to streamline operations and elevate guest experiences. Manage bookings, streamline guest interactions, and optimize hotel operations with ease. EdHotel offers a comprehensive suite of tools including booking management, guest communication, and operational efficiency solutions.',
@@ -83,7 +86,6 @@ export default function RootLayout({ children }) {
     <>
       <Head>
         <title>EdHotel - Hotel Management Application</title>
-        <link rel="icon" href="/icon.png" sizes="any" />
       </Head>
       <html lang="en" className="scroll-smooth">
         <body className={`${prompt.className}`}>
