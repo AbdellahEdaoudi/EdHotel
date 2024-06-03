@@ -67,7 +67,6 @@ function Page({ params }) {
           }
           .invoice-header h1 {
             font-size: 28px;
-            color: #D97706;
             margin: 0;
           }
           .invoice-details {
@@ -96,12 +95,11 @@ function Page({ params }) {
       <body>
         <div class="invoice-container">
           <div class="invoice-header">
+          <h1>EdHotel</h1>
             <img src="https://res.cloudinary.com/dynprvsfg/image/upload/v1717421518/wprm2rcy3qvhn1jvc1wk.png" alt="Hotel Logo"/>
-            <h1>EdHotel</h1>
           </div>
           <div class="invoice-details">
-           <p>Welcome, <span>${name}</span></p>
-           <p>We have received a message from you:</p>
+           <p>Welcome, <span>${name} We have received a message from you:</span></p>
            <p>Subject: <span>${subjectt}</span></p>
            <p>Message: <span>${msg}</span></p>
            <p>Reply: <span>${html}</span></p>
