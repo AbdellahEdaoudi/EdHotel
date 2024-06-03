@@ -99,10 +99,10 @@ function Page({ params }) {
             <img src="https://res.cloudinary.com/dynprvsfg/image/upload/v1717421518/wprm2rcy3qvhn1jvc1wk.png" alt="Hotel Logo"/>
           </div>
           <div class="invoice-details">
-           <p>Welcome, <span>${name} We have received a message from you:</span></p>
+           <p>Welcome,${name},We have received a message from you:</p>
            <p>Subject: <span>${subjectt}</span></p>
            <p>Message: <span>${msg}</span></p>
-           <p>Reply: <span>${html}</span></p>
+           <p>Reply: ${html}</p>
           </div>
           <div class="invoice-footer">
             <p>Thank you for choosing our hotel!</p>
