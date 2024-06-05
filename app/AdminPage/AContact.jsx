@@ -58,7 +58,7 @@ function AContact() {
       </div>
       {contacts.length > 0 ? (
         <div>
-          <table className="min-w-full divide-y divide-gray-200 text-sm">
+          <table className=" divide-y divide-gray-200 text-sm ">
             <thead className="bg-gray-50 text-black border">
               <tr>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Name</th>
@@ -72,13 +72,17 @@ function AContact() {
             <tbody className="bg-white divide-x-2 divide-y-2 text-black border-b-2 divide-gray-200">
               {contacts.map((contact, index) => (
                 <tr key={index} className='border-b-2'>
-                  <td className="px-6 py-4 whitespace-normal border ">{contact.name}</td>
-                  <td className="px-6 py-4 whitespace-normal border">{contact.email}</td>
-                  <td className="px-6 py-4 whitespace-normal border w-96">{contact.subject}</td>
-                  <td className="px-6 py-4 whitespace-normal border w-96">{contact.msg}</td>
-                  <td className="px-6 py-4 whitespace-normal border">{`${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()+1}/${new Date(contact.created_at).getDate()} 
-                                                                        ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}`}</td>
-                  <td className="px-6 py-4 whitespace-normal border-r-2 flex gap-2 ">
+                  <td className="px-6 py-4 border   ">{contact.name}</td>
+                  <td className="px-6 py-4 border  ">{contact.email}</td>
+                  <td className="px-6 py-4 border break-all">{contact.subject}</td>
+                  <td className="px-6 py-4 border break-all ">{contact.msg}</td>
+                  <td className="px-6 py-4 border">
+                    {`
+                    ${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()+1}/${new Date(contact.created_at).getDate()} 
+                    ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}
+                    `}
+                  </td>
+                  <td className="px-6 py-4 border-r-2 flex gap-2 ">
                     <button onClick={() => DeleteContact(contact._id)} className="bg-red-500 text-white p-2 rounded-md hover:text-red-900">
                       Delete
                     </button>
