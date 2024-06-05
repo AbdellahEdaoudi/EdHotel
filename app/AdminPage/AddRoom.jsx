@@ -7,9 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function AddRoom({setAdmin}) {
   const formRef = useRef(null);
   const [ImageRoom, setImageRoom] = useState(null);
+  const [loading,setLoading]=useState(false);
 
   const PostRoom = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(formRef.current);
     try {
       const response = await axios.post('https://ed-hotel-api.vercel.app/Rooms', formData);
@@ -19,9 +21,8 @@ function AddRoom({setAdmin}) {
         position: "top-center",
         autoClose: 1000,
       });
-      setAdmin("ROOMS");
       formRef.current.reset();
-      setImageRoom(null); 
+      setImageRoom(null);
     } catch (error) {
       console.error('There was an error uploading the room!', error);
       toast('There was an error uploading the room!', {
@@ -29,6 +30,9 @@ function AddRoom({setAdmin}) {
         position: "top-center",
         autoClose: 5000,
       });
+    setLoading(false);
+    } finally{
+    setLoading(false);
     }
   };
 
@@ -87,9 +91,10 @@ function AddRoom({setAdmin}) {
         />
         <button 
           type="submit" 
-          className="p-4 bg-yellow-500 text-black rounded-md"
+          className="p-4 bg-yellow-500 text-black rounded-md" 
+          disabled={loading}
         >
-          Submit
+          {loading ? "Adding..." : "Submit"}
         </button>
       </form>
       <div className='md:block hidden p-6'>

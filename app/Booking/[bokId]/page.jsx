@@ -135,9 +135,7 @@ function Page({ params }) {
       });
       Delete(id);
       toast("Email sent successfully", {
-        type: "success",
-        position: "top-center",
-        autoClose: 1000,
+       
       });
       setTimeout(() => { router.push('/Admin') }, 2000);
     } catch (error) {

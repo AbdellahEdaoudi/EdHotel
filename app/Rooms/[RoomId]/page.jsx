@@ -24,39 +24,42 @@ function page({params}) {
     const [check_out, setCheckOut] = useState('');
     const [Booking,setBooking]=useState([]);
     const [Paying,setPaying]=useState([]);
+    const [isBooking, setIsBooking] = useState(false); // New state
+
 
     useEffect(() => {
-      // const accessToken = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
-      if (status === "unauthenticated") {
-        signIn("google", {redirect:true, callbackUrl:`/Rooms/${params.RoomId}`})
-      } else {
-        router.push(`/Rooms/${params.RoomId}`);
-      }
-    }, [router, status]);
+    if (status === "unauthenticated") {
+      signIn("google", { redirect: true, callbackUrl: `/Rooms/${params.RoomId}` });
+    } else {
+      axios.get(`https://ed-hotel-api.vercel.app/Rooms/${params.RoomId}`)
+        .then(res => {
+          setrm(res.data);
+          setNameR(res.data.name);
+          setPrix(res.data.prix);
+        });
+    }
+  }, [router, status]);
+
 
     useEffect(() => {
       axios.get(`https://ed-hotel-api.vercel.app/Booking`)
-        .then((res) => setBooking(res.data))
-    },[]);
-    useEffect(() => {
+        .then(res => setBooking(res.data));
       axios.get(`https://ed-hotel-api.vercel.app/Checkout`)
-        .then((res) => setPaying(res.data))
-    },[]);
+        .then(res => setPaying(res.data));
+    }, []);
 
     const PostBoking = async (e) => {
+      e.preventDefault();
+      setIsBooking(true);
       const checkInDateObj = parseISO(check_in);
      const checkOutDateObj = parseISO(check_out);
      const daysDifference = differenceInDays(checkOutDateObj, checkInDateObj);
      const prixTotal = isNaN(daysDifference) ? 0 : (rm.prix * daysDifference === 0 ? rm.prix : (rm.prix * 2) * daysDifference);
-     e.preventDefault();
-      if (!check_in || !check_out) {
-        toast("Please select both check-in and check-out dates.", {
-          type: "error", // Can be 'success', 'error', 'info', etc.
-          position: "top-center", // Adjust position as needed
-          autoClose: 3000, // Milliseconds before auto-dismissal
-        });
-        return;
-      }
+     if (!check_in || !check_out) {
+      toast.error("Please select both check-in and check-out dates.", { type: "error", position: "top-center", autoClose: 3000 });
+      setIsBooking(false); // Re-enable the button
+      return;
+    }
       const myDate = new Date(); 
       myDate.setHours(0, 0, 0, 0);
       const checkInDate = new Date(check_in); 
@@ -64,118 +67,74 @@ function page({params}) {
       
       // Compare check_in and check_out dates with current date
       if (checkInDate < myDate || checkOutDate < myDate) {
-        toast("Please select dates in the future", {
-          type: "error",
-          position: "top-center",
-          autoClose: 3000,
-        });
+        toast.error("Please select dates in the future", { type: "error", position: "top-center", autoClose: 3000 });
+        setIsBooking(false); // Re-enable the button
         return;
       }
       
       for (const bkinout of Booking) {
-        if (bkinout.nameR !== nameR) {
-          continue; 
+        if (bkinout.nameR === nameR) {
+          const checkInDateB = new Date(bkinout.check_in);
+          const checkOutDateB = new Date(bkinout.check_out);
+          if (
+            (checkInDate >= checkInDateB && checkInDate < checkOutDateB) || 
+            (checkOutDate > checkInDateB && checkOutDate <= checkOutDateB) ||  
+            (checkInDate <= checkInDateB && checkOutDate >= checkOutDateB)
+          ) {
+            toast.error(`Room is already booked from ${checkInDateB.toDateString()} to ${checkOutDateB.toDateString()}.`, { type: "error", position: "top-center", autoClose: 3000 });
+            setIsBooking(false); // Re-enable the button
+            return;
+          }
         }
-        const checkInDateB = new Date(bkinout.check_in);
-        const checkOutDateB = new Date(bkinout.check_out);
-    
-        if (
-          (checkInDate >= checkInDateB && checkInDate < checkOutDateB) || 
-          (checkOutDate > checkInDateB && checkOutDate <= checkOutDateB) ||  
-          (checkInDate <= checkInDateB && checkOutDate >= checkOutDateB)  
-        ) {
-          const DateInInBooking = `${checkInDateB.getFullYear()}-${checkInDateB.getMonth() + 1}-${checkInDateB.getDate()}`;
-          const DateOutInBooking = `${checkOutDateB.getFullYear()}-${checkOutDateB.getMonth() + 1}-${checkOutDateB.getDate()}`;
-          const errorMessage = `Room is already booked for the requested dates. It's booked from ${DateInInBooking} to ${DateOutInBooking}.`;
-          toast(errorMessage, {
-            type: "error",
-            position: "top-center",
-            autoClose: 3000,
-          });
-          return;
-        }
-        
       }
       for (const bkinout of Paying) {
-        if (bkinout.nameR !== nameR) {
-          continue; 
+        if (bkinout.nameR === nameR) {
+          const checkInDateB = new Date(bkinout.check_in);
+          const checkOutDateB = new Date(bkinout.check_out);
+          if (
+            (checkInDate >= checkInDateB && checkInDate < checkOutDateB) || 
+            (checkOutDate > checkInDateB && checkOutDate <= checkOutDateB) ||  
+            (checkInDate <= checkInDateB && checkOutDate >= checkOutDateB)
+          ) {
+            toast.error(`Room is already booked from ${checkInDateB.toDateString()} to ${checkOutDateB.toDateString()}.`, { type: "error", position: "top-center", autoClose: 3000 });
+            setIsBooking(false); // Re-enable the button
+            return;
+          }
         }
-        const checkInDateB = new Date(bkinout.check_in);
-        const checkOutDateB = new Date(bkinout.check_out);
-    
-        if (
-          (checkInDate >= checkInDateB && checkInDate < checkOutDateB) || 
-          (checkOutDate > checkInDateB && checkOutDate <= checkOutDateB) ||  
-          (checkInDate <= checkInDateB && checkOutDate >= checkOutDateB)  
-        ) {
-          const DateInInBooking = `${checkInDateB.getFullYear()}-${checkInDateB.getMonth() + 1}-${checkInDateB.getDate()}`;
-          const DateOutInBooking = `${checkOutDateB.getFullYear()}-${checkOutDateB.getMonth() + 1}-${checkOutDateB.getDate()}`;
-          const errorMessage = `Room is already booked for the requested dates. It's booked from ${DateInInBooking} to ${DateOutInBooking}.`;
-          toast(errorMessage, {
-            type: "error",
-            position: "top-center",
-            autoClose: 3000,
-          });
-          return;
-        }
-        
       }
       if (checkOutDate < checkInDate) {
-        toast("Your selected check-out date must be after the check-in date", {
-          type: "error",
-          position: "top-center",
-          autoClose: 3000,
-        });
+        toast.error("Your selected check-out date must be after the check-in date", { type: "error", position: "top-center", autoClose: 3000 });
+        setIsBooking(false); // Re-enable the button
         return;
       }
 
       try {
         const response = await axios.post(
           `https://ed-hotel-api.vercel.app/Booking`,
-          {nameC,email,nameR,prix:prixTotal,check_in,check_out},
-          {
-            headers: { "Content-Type": "application/json" },
-          }
+          { nameC, email, nameR, prix: prixTotal, check_in, check_out },
+          { headers: { "Content-Type": "application/json" } }
         );
-        console.log(response.data);
-        toast("Booking succesfully", {
-          type: "success", // Can be 'success', 'error', 'info', etc.
-          position: "top-center", // Adjust position as needed
-          autoClose: 1000, // Milliseconds before auto-dismissal
-        });
+        toast.success("Booking successful", { type: "success", position: "top-center", autoClose: 1000 });
         setTimeout(() => {
-          router.push("/Booking")
-          },500);
-        // router.push("/Booking")
+          router.push("/Booking");
+        }, 1000);
       } catch (error) {
-  if (error.response && error.response.status === 400) {
-    toast("date is invalid", {
-      type: "error",
-      position: "top-center",
-      autoClose: 3000,
-    });
-  } else {
-    console.error(error);
-    toast("An error occurred. Please try again.", {
-      type: "error",
-      position: "top-center",
-      autoClose: 3000,
-    });
-  }
-}
+        if (error.response && error.response.status === 400) {
+          toast.error("Date is invalid", { type: "error", position: "top-center", autoClose: 3000 });
+        } else {
+          console.error(error);
+          toast.error("An error occurred. Please try again.", { type: "error", position: "top-center", autoClose: 3000 });
+        }
+      } finally {
+        setIsBooking(true); 
+      }
     };
     useEffect(() => {
       {status==="unauthenticated" ? signIn("google", {redirect:true, callbackUrl:`/Rooms/${params.RoomId}`}): router.push(`/Rooms/${params.RoomId}`)}
     }, [router]);
   
 
-  useEffect(() => {
-    axios.get(`https://ed-hotel-api.vercel.app/Rooms/${params.RoomId}`)
-      .then((res)=>{setrm(res.data);
-        setNameR(res.data.name);
-        setPrix(res.data.prix);
-      })
-  },[]);
+  
      const checkInDateObj = parseISO(check_in);
      const checkOutDateObj = parseISO(check_out);
      const daysDifference = differenceInDays(checkOutDateObj, checkInDateObj);
@@ -216,8 +175,15 @@ function page({params}) {
       <span>Check in <br /><input onChange={(e)=>{setCheckIn(e.target.value)}} type="date" name="" id="" className='bg-gray-200 rounded-md p-2 border  w-full ' /></span><br />
       <span>Check out <br /><input onChange={(e)=>{setCheckOut(e.target.value)}} type="date" name="" id="" className='bg-gray-200 rounded-md p-2 border w-full mb-1' /></span>
       <span>Prix/$ <br /><input value={Number(`${isNaN(daysDifference) ? 0 : (rm.prix * daysDifference === 0 ? rm.prix : (rm.prix * 2) * daysDifference)}`)} onChange={(e)=>{setPrix(e.target.value)}} type="text" name="" id="" className='bg-gray-200 rounded-md p-2 border  w-full ' /></span><br />
-      <button onClick={PostBoking} className='text-center mt-1 py-3 rounded-md bg-red-400 w-full '>BOOK NOW</button>
-    </div>
+      <button 
+        onClick={PostBoking} 
+        className='text-center mt-1 py-3 rounded-md bg-red-400 w-full' 
+        disabled={isBooking} 
+      >
+        {isBooking ? "Booking..." : "BOOK NOW"}  
+      </button> 
+         
+      </div>
    </div>
    </div>
    </div>

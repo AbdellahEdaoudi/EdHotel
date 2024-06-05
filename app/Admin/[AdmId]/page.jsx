@@ -16,6 +16,7 @@ function Page({ params }) {
   const [type, settype] = useState("");
   const [capacity, setCapacity] = useState("");
   const [prix, setprix] = useState("");
+  const [loading,setLoading]=useState(false);
 
   useEffect(() => {
     axios
@@ -43,6 +44,7 @@ function Page({ params }) {
 
   const UpdateRoom = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(formRef.current);
     try {
       const response = await axios.put(`https://ed-hotel-api.vercel.app/Rooms/${params.AdmId}`, formData);
@@ -52,7 +54,6 @@ function Page({ params }) {
         position: "top-center",
         autoClose: 1000,
       });
-      router.push('/Admin');
       formRef.current.reset();
       setImageRoom(null); 
     } catch (error) {
@@ -62,6 +63,9 @@ function Page({ params }) {
         position: "top-center",
         autoClose: 5000,
       });
+    setLoading(false);
+    } finally {
+    setLoading(false);
     }
   };
   const Logout =  () => {
@@ -156,8 +160,8 @@ function Page({ params }) {
             placeholder="Prix"
             className="bg-white p-3 border border-black rounded-md w-96"
           />
-          <button type="submit" className="p-4 bg-yellow-500 text-black rounded-md">
-            Update
+          <button disabled={loading} type="submit" className="p-4 bg-yellow-500 text-black rounded-md">
+            {loading ? "Updating..." : "Update"}
           </button>
         </form>
         <div className="md:block hidden p-6">
