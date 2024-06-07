@@ -16,6 +16,7 @@ function Page({ params }) {
   const [msg, setmsg] = useState("");
   const [html, setHtml] = useState("");
   const [name, setName] = useState("");
+  const [loading,setloading]=useState(false);
 
   useEffect(() => {
     axios.get(`https://ed-hotel-api.vercel.app/Contact/${params.ContactId}`)
@@ -33,6 +34,7 @@ function Page({ params }) {
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    setloading(true)
     const printContent = `
     <html>
       <head>
@@ -131,6 +133,7 @@ function Page({ params }) {
         position: "top-center",
         autoClose: 3000,
       });
+      setloading(false)
     }
   };
 
@@ -193,8 +196,8 @@ function Page({ params }) {
             required
             className="bg-white p-3 border border-black rounded-md"
           />
-          <button type="submit" className="p-4 bg-yellow-500 text-black rounded-md">
-            Send Email
+          <button type="submit" disabled={loading} className="p-4 bg-yellow-500 text-black rounded-md">
+            {loading ? "Sending..." : "Send Email"}
           </button>
         </form>
         <ToastContainer />
