@@ -28,7 +28,6 @@ function About() {
                 <span className="text-3xl "> 4657 </span><span>Clients</span>
               </div>
             </div>
-            <button className="px-8 ml-7 py-4 rounded-md bg-yellow-500 text-white">EXPLORE MORE</button>
           </div>
           <div>
           <img src="about-1.jpg" alt="about-1.jpg"  className=" rounded-md md:mb-0 mb-8"/>
