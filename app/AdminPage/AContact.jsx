@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 function AContact() {
   const [contacts, setContacts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -44,45 +45,58 @@ function AContact() {
     }
   };
 
+  const filteredContacts = contacts.filter(
+    contact =>
+      contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      contact.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto p-1">
-      <div className=" w-full h-full mt-6 text-center pb-5 flex justify-between ">
+      <div className="w-full h-full mt-6 text-center pb-5 flex justify-between items-center">
         <h1 className="text-4xl ml-16 text-black font-bold">
           Our <span className="text-amber-400">Contact</span>
         </h1>
-        {contacts.length > 0 && (<button onClick={DeleteAllContacts} 
-          className={`bg-red-500 text-white px-4 py-3 rounded-md mb-4 pr-5 hover:text-red-900
-          `}>
-           Delete All Contacts
-          </button>)}
+        <input
+          type="search"
+          placeholder="Search by name or email"
+          className="p-2 border border-gray-300 bg-white rounded-md w-1/3"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        {contacts.length > 0 && (
+          <button onClick={DeleteAllContacts} className="p-2 bg-red-400 text-white rounded-md mr-2 hover:bg-red-500">
+            Delete All Contacts
+          </button>
+        )}
       </div>
-      {contacts.length > 0 ? (
+      {filteredContacts.length > 0 ? (
         <div>
-          <table className=" divide-y divide-gray-200 text-sm ">
+          <table className="min-w-full divide-y divide-gray-200 text-[12px]">
             <thead className="bg-gray-50 text-black border">
               <tr>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Name</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Email</th>
-                <th className="px-6 py-3 text-left font-medium text-gray-500 border">subject</th>
+                <th className="px-6 py-3 text-left font-medium text-gray-500 border">Subject</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Message</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Date/Time</th>
                 <th className="px-6 py-3 text-left font-medium text-gray-500 border">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-x-2 divide-y-2 text-black border-b-2 divide-gray-200">
-              {contacts.map((contact, index) => (
-                <tr key={index} className='border-b-2'>
-                  <td className="px-6 py-4 border   ">{contact.name}</td>
-                  <td className="px-6 py-4 border  ">{contact.email}</td>
+              {filteredContacts.map((contact, index) => (
+                <tr key={index} className="border-b-2">
+                  <td className="px-6 py-4 border">{contact.name}</td>
+                  <td className="px-6 py-4 border">{contact.email}</td>
                   <td className="px-6 py-4 border break-all">{contact.subject}</td>
-                  <td className="px-6 py-4 border break-all ">{contact.msg}</td>
+                  <td className="px-6 py-4 border break-all">{contact.msg}</td>
                   <td className="px-6 py-4 border">
                     {`
                     ${new Date(contact.created_at).getFullYear()}/${new Date(contact.created_at).getMonth()+1}/${new Date(contact.created_at).getDate()} 
                     ${new Date(contact.created_at).getHours()}:${new Date(contact.created_at).getMinutes()}:${new Date(contact.created_at).getMilliseconds()}
                     `}
                   </td>
-                  <td className="px-6 py-4 border-r-2 flex gap-2 ">
+                  <td className="px-6 py-4 border-r-2 flex gap-2">
                     <button onClick={() => DeleteContact(contact._id)} className="bg-red-500 text-white p-2 rounded-md hover:text-red-900">
                       Delete
                     </button>
