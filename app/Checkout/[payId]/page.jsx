@@ -116,7 +116,7 @@ function Page({ params }) {
         <div class="invoice-container">
           <div class="invoice-header">
             <h1>EdHotel</h1>
-            <img src="https://res.cloudinary.com/dynprvsfg/image/upload/v1717421518/wprm2rcy3qvhn1jvc1wk.png" alt="Hotel Logo"/>
+            <img src="https://urlimage.vercel.app/Logo-my-hotel-app.png" alt="Hotel Logo"/>
           </div>
           <div class="invoice-details">
            <p>${html}</p>
