@@ -9,7 +9,7 @@ function APaying() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get("https://ed-hotel-api.vercel.app/Checkout");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Checkout`);
         setCheckouts(response.data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -92,9 +92,9 @@ function APaying() {
   `;
     if (window.confirm("Are you sure you want to Cancel all Paying?")) {
       try {
-        await axios.delete("https://ed-hotel-api.vercel.app/Checkoutd");
+        await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Checkoutd`);
         const emailAddresses = Checkouts.map(booking => booking.email);
-        await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
+        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/SendEmailAll`, {
           to: emailAddresses,
           subject: 'Payment Cancellation',
           html: printContent

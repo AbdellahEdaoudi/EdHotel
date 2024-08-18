@@ -26,7 +26,7 @@ function Page() {
 
     try {
       const response = await axios.post(
-        `https://ed-hotel-api.vercel.app/Adminlogin`,
+        `${process.env.NEXT_PUBLIC_SERVER_URl}/Adminlogin`,
         { email, pass }
       );
 

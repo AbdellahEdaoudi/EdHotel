@@ -22,7 +22,7 @@ const CheckoutForm = ({ amount }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://ed-hotel-api.vercel.app/Booking');
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking`);
         setBooking(res.data);
         setBookinge(res.data.filter((bk) => bk.email === data?.user.email));
       } catch (error) {
@@ -37,7 +37,7 @@ const CheckoutForm = ({ amount }) => {
     const userBookings = Booking.filter((bk) => bk.email === data?.user.email);
 
     try {
-      const response = await axios.delete('https://ed-hotel-api.vercel.app/BookingdAll', {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/BookingdAll`, {
         data: { bookings: userBookings }
       });
       console.log(response.data);
@@ -48,7 +48,7 @@ const CheckoutForm = ({ amount }) => {
 
   const sendPayment = async () => {
     try {
-      const response = await axios.post('https://ed-hotel-api.vercel.app/CheckoutDoc', Bookinge);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/CheckoutDoc`, Bookinge);
       console.log('Payment successfully:', response.data);
       toast('Payment successfully!', {
         type: 'success',

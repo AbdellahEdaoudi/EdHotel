@@ -40,7 +40,7 @@ function Contact() {
         }
         try {
             const response = await axios.post(
-                `https://ed-hotel-api.vercel.app/Contact`,
+                `${process.env.NEXT_PUBLIC_SERVER_URl}/Contact`,
                 { name, email, subject, msg },
                 { headers: { "Content-Type": "application/json" } }
             );

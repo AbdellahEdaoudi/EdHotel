@@ -25,7 +25,7 @@ function Rooms() {
     }, [router, status]);
   
     useEffect(() => {
-      axios.get('https://ed-hotel-api.vercel.app/Rooms')
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms`)
         .then((res) => setdataH(res.data))
     },[]);  
   

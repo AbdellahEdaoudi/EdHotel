@@ -14,7 +14,7 @@ function AddRoom({setAdmin}) {
     setLoading(true);
     const formData = new FormData(formRef.current);
     try {
-      const response = await axios.post('https://ed-hotel-api.vercel.app/Rooms', formData);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms`, formData);
       console.log(response.data);
       toast("Room added successfully", {
         type: "success",

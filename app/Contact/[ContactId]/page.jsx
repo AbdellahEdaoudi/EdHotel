@@ -19,7 +19,7 @@ function Page({ params }) {
   const [loading,setloading]=useState(false);
 
   useEffect(() => {
-    axios.get(`https://ed-hotel-api.vercel.app/Contact/${params.ContactId}`)
+    axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Contact/${params.ContactId}`)
       .then((res) => {
         setEmail(res.data.email);
         setSubject("Edhotel Contact");
@@ -115,7 +115,7 @@ function Page({ params }) {
   `;
 
     try {
-      await axios.post("https://ed-hotel-api.vercel.app/SendEmail", {
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}}/SendEmail`, {
         to: email,
         subject,
         html : printContent,

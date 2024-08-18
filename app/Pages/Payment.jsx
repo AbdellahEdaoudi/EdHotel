@@ -15,7 +15,7 @@ export function Payment() {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get('https://ed-hotel-api.vercel.app/Checkout');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Checkout`);
       setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);

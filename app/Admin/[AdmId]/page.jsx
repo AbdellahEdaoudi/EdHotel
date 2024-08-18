@@ -20,7 +20,7 @@ function Page({ params }) {
 
   useEffect(() => {
     axios
-      .get(`https://ed-hotel-api.vercel.app/Rooms/${params.AdmId}`)
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms/${params.AdmId}`)
       .then((res) => {
         setimageUrl(res.data.imageUrl);
         setname(res.data.name);

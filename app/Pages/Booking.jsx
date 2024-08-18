@@ -25,7 +25,7 @@ export function Booking() {
 
   const fetchBookings = async () => {
     try {
-      const response = await axios.get('https://ed-hotel-api.vercel.app/Booking');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking`);
       setBookings(response.data);
     } catch (error) {
       console.error('Error fetching bookings:', error);
@@ -36,7 +36,7 @@ export function Booking() {
     if (confirm('Are you sure you want to cancel All bookings?')) {
       const userBookings = bookings.filter((bk) => bk.email === data?.user.email);
     try {
-      await axios.delete('https://ed-hotel-api.vercel.app/BookingdAll', {
+      await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/BookingdAll`, {
         data: { bookings: userBookings }
       });
     } catch (error) {
@@ -51,7 +51,7 @@ export function Booking() {
       if (!confirmed) {
         return;
       }
-      await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking/${id}`);
       
     } catch (error) {
       console.error('Error deleting booking:', error);
@@ -60,7 +60,7 @@ export function Booking() {
   };
   const deleteBookingAuto = async (id) => {
     try {
-      await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking/${id}`);
     } catch (error) {
       console.error('Error deleting booking:', error);
       alert('Failed to delete booking');

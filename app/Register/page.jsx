@@ -24,7 +24,7 @@ function page() {
     // Hash the password
     try {
       const response = await Axios.post(
-        `https://ed-hotel-api.vercel.app/register`,
+        `${process.env.NEXT_PUBLIC_SERVER_URl}/register`,
         { name, email, pass },
         {
           headers: { "Content-Type": "application/json" },

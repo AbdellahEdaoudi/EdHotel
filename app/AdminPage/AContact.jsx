@@ -9,7 +9,7 @@ function AContact() {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get('https://ed-hotel-api.vercel.app/Contact');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Contact`);
         setContacts(response.data);
       } catch (error) {
         console.error('Error fetching contacts:', error);
@@ -24,7 +24,7 @@ function AContact() {
   const DeleteAllContacts = async () => {
     if (window.confirm("Are you sure you want to delete all contacts?")) {
       try {
-        const response = await axios.delete('https://ed-hotel-api.vercel.app/Contact');
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Contact`);
         console.log(response.data.message);
         setContacts([]);
       } catch (error) {
@@ -36,7 +36,7 @@ function AContact() {
   const DeleteContact = async (id) => {
     if (window.confirm("Are you sure you want to delete this contact?")) {
       try {
-        const response = await axios.delete(`https://ed-hotel-api.vercel.app/Contact/${id}`);
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Contact/${id}`);
         console.log(response.data.message);
         setContacts(contacts.filter(contact => contact._id !== id));
       } catch (error) {

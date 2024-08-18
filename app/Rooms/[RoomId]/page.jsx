@@ -31,7 +31,7 @@ function page({params}) {
     if (status === "unauthenticated") {
       signIn("google", { redirect: true, callbackUrl: `/Rooms/${params.RoomId}` });
     } else {
-      axios.get(`https://ed-hotel-api.vercel.app/Rooms/${params.RoomId}`)
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms/${params.RoomId}`)
         .then(res => {
           setrm(res.data);
           setNameR(res.data.name);
@@ -42,9 +42,9 @@ function page({params}) {
 
 
     useEffect(() => {
-      axios.get(`https://ed-hotel-api.vercel.app/Booking`)
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking`)
         .then(res => setBooking(res.data));
-      axios.get(`https://ed-hotel-api.vercel.app/Checkout`)
+      axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Checkout`)
         .then(res => setPaying(res.data));
     }, []);
 
@@ -110,7 +110,7 @@ function page({params}) {
 
       try {
         const response = await axios.post(
-          `https://ed-hotel-api.vercel.app/Booking`,
+          `${process.env.NEXT_PUBLIC_SERVER_URl}/Booking`,
           { nameC, email, nameR, prix: prixTotal, check_in, check_out },
           { headers: { "Content-Type": "application/json" } }
         );

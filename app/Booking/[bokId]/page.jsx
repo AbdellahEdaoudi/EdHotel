@@ -22,7 +22,7 @@ function Page({ params }) {
   const [loading,setloading]=useState(false);
 
   useEffect(() => {
-    axios.get(`https://ed-hotel-api.vercel.app/Booking/${params.bokId}`)
+    axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking/${params.bokId}`)
       .then((res) => {
         setEmail(res.data.email);
         setSubject(`Cancellation Of Booking`);
@@ -49,7 +49,7 @@ function Page({ params }) {
 
   const Delete = async (id) => {
       try {
-        const response = await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking/${id}`);
         console.log(response.data.message);
         setBookings(bookings.filter(booking => booking._id !== id));
       } catch (error) {
@@ -130,7 +130,7 @@ function Page({ params }) {
     </html>
   `;
     try {
-      await axios.post("https://ed-hotel-api.vercel.app/SendEmail", {
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/SendEmail`, {
         to: email,
         subject,
         html : printContent,

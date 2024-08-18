@@ -30,7 +30,7 @@ function Page() {
 
     try {
       const response = await axios.post(
-        `https://ed-hotel-api.vercel.app/login`,
+        `${process.env.NEXT_PUBLIC_SERVER_URl}/login`,
         { email, pass }
       );
 

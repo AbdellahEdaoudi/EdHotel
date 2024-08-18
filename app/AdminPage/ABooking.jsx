@@ -10,7 +10,7 @@ function ABooking() {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get('https://ed-hotel-api.vercel.app/Booking');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking`);
         setBookings(response.data);
       } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -93,9 +93,9 @@ function ABooking() {
   `;
     if (window.confirm("Are you sure you want to Cancel all Booking?")) {
       try {
-        await axios.delete("https://ed-hotel-api.vercel.app/Bookingd");
+        await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Bookingd`);
         const emailAddresses = bookings.map(booking => booking.email);
-        await axios.post('https://ed-hotel-api.vercel.app/SendEmailAll', {
+        await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/SendEmailAll`, {
           to: emailAddresses,
           subject: 'Booking Cancellation',
           html: printContent
@@ -112,7 +112,7 @@ function ABooking() {
   const Delete = async (id) => {
     if (window.confirm('Are you sure you want to delete this booking?')) {
       try {
-        const response = await axios.delete(`https://ed-hotel-api.vercel.app/Booking/${id}`);
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Booking/${id}`);
         console.log(response.data.message);
         setBookings(bookings.filter(booking => booking._id !== id));
       } catch (error) {

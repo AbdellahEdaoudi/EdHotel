@@ -15,7 +15,7 @@ function ARooms({ setAdmin }) {
   const bath = <img src="bathtub.png" alt="star.png" width={15} height={11} />;
 
   useEffect(() => {
-    axios.get('https://ed-hotel-api.vercel.app/Rooms')
+    axios.get(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms`)
       .then((res) => setdataH(res.data))
       .catch((error) => console.error('Error fetching rooms:', error));
   }, []);
@@ -23,7 +23,7 @@ function ARooms({ setAdmin }) {
   const DeleteById = async (roomId) => {
     if (confirm('Are you sure you want to delete this room?')) {
       try {
-        await axios.delete(`https://ed-hotel-api.vercel.app/Rooms/${roomId}`);
+        await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URl}/Rooms/${roomId}`);
         const updatedRooms = dataH.filter(room => room._id !== roomId);
         setdataH(updatedRooms);
       } catch (error) {
