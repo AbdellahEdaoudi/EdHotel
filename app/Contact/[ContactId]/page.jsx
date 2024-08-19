@@ -115,7 +115,7 @@ function Page({ params }) {
   `;
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}}/SendEmail`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URl}/SendEmail`, {
         to: email,
         subject,
         html : printContent,
